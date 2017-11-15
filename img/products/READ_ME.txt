@@ -1,0 +1,1 @@
+Keep the pictures 80x80 px
