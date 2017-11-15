@@ -1,9 +1,8 @@
 <?php
-
 $servername = "utbweb.its.ltu.se";
-$username = "alebor-5";
+$username = "antwah-5";
 $password = "hejsan123";
-$dbname = "alebor5db";
+$dbname = "antwah5db";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -32,7 +31,19 @@ if ($conn->connect_error) {
 	</form>
 	
 	<div id="accountandcart">
-		<a href="" ><img src="img/account.png" alt="Användare" /></a>
+	
+	
+		
+		<div class="dropdown">
+			<a href="" ><img src="img/account.png" alt="Användare" /></a>
+			<div class="dropdown-content">			
+				<a href="register.php" >Logga in</a><br>
+				<a href="register.html" >Registrera</a>
+			</div>
+		</div>
+		
+		
+		
 		<a href=""><img src="img/kundvagn.png" alt="Kundvagn" id="temp" /></a>
 	</div>
 </div>
