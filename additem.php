@@ -1,8 +1,8 @@
 <?php
 $servername = "utbweb.its.ltu.se";
-$username = "alebor-5";
+$username = "antwah-5";
 $password = "hejsan123";
-$dbname = "alebor5db";
+$dbname = "antwah5db";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

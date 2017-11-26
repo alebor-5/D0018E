@@ -1,24 +1,8 @@
 
-<html>
-<head>
-<title>Test</title>
-<link rel="stylesheet" type="text/css" href="style/main.css" />
-</head>
-
-<body>
-<div id="top-wr">
-	<img src="img/logga.png" alt="Logga" />
-	
-	<form action="search_prod.php">
-		<input type="text" name="Search" placeholder="Sök produkt" />
-		<input type="submit" value="Sök" />
-	</form>
-	
-	<div id="accountandcart">
-		<a href="" ><img src="img/account.png" alt="Användare" /></a>
-		<a href=""><img src="img/kundvagn.png" alt="Kundvagn" id="temp" /></a>
-	</div>
-</div>
+<?php
+	include_once 'extra/conn.php';
+	include_once 'extra/header.php';
+?>
 
 <div id="body-wr">
 <!-- behöver kolla så admin konto aktiverat -->
