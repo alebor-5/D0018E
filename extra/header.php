@@ -1,5 +1,11 @@
 <?php
 	session_start();
+	
+	//Kolla om det finns en tidigare varukorg?
+	if(!isset($_SESSION['prodIDs'])){
+		 $_SESSION['prodIDs']= array();
+		 
+	}
 ?>
 
 
@@ -45,6 +51,6 @@
 		
 		
 		
-		<a href=""><img src="img/kundvagn.png" alt="Kundvagn" id="temp" /></a>
+		<a href="shoppingcart.php"><img src="img/kundvagn.png" alt="Kundvagn" id="temp" /></a>
 	</div>
 </div>

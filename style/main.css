@@ -62,10 +62,10 @@ background:#444;
 	margin-left:20px;
 	margin-top:10px;
 }
-.main-placer button{
+.main-placer input[type=submit]{
 	width:150px;
 	height:20px;
-	margin-top:70px;
+	
 	float:right;
 }
 .login{
