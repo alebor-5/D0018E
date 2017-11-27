@@ -64,9 +64,15 @@ background:#444;
 }
 .main-placer input[type=submit]{
 	width:150px;
-	height:20px;
-	
+	height:30px;
+
 	float:right;
+}
+
+.main-placer input[type=number]{
+	width:50px;
+	float:right;
+
 }
 .login{
 	float: left;
@@ -99,4 +105,61 @@ background:#444;
 
 .dropdown .dropdown-content a:hover{
 	text-decoration: underline; 
+}
+.cart-placer{
+	width:1000px;
+	height:100px;
+	margin:0px auto;
+	border-bottom:1px solid #ccc;
+	font-weight:bold;
+	text-align:center;
+}
+
+.cart-placer img{
+	display:block;
+	float:left;
+}
+
+.cartName{
+	float:left;
+	width:100px;
+	padding-top:40px;
+	height:40px;
+}
+.cartCost{
+	float:right;
+	width:100px;
+	padding-top:40px;
+	height:40px;
+	margin-right:50px;
+}
+.cartQuant{
+	float:right;
+	width:100px;
+	padding-top:40px;
+	height:40px;
+	margin-right:50px;
+}
+
+.cart-placer input[type=submit]{
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	width:24px;
+	height:24px;
+	margin-top:36px;
+	margin-right:50px;
+	background-image: url("../img/trash.png");
+	float:right;
+}
+.cart-placer form{'
+
+	display:block;
+	float:right;
+}
+#cartsummary{
+	width:1000px;
+	height:100px;
+	margin:0px auto;
+	border-bottom:1px solid #ccc;
 }

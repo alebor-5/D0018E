@@ -30,6 +30,7 @@ if (isset($_POST['submit'])){
 	if($row["Pwd"] === $password){
 		//login success
 		$_SESSION['user'] = $row['Admin'];
+		$_SESSION['accID'] = $row['AccountID'];
 		$pwd = "pwd=0";
 		
 		header("Location: ../index.php");
