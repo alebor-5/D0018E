@@ -74,7 +74,9 @@ if(!isset($_SESSION['user'])){ //Detta är för icke inloggade användare!
 
 if(isset($_SESSION['user']) && isset($_SESSION['orderId'])){ 
 	
-	$sql = "SELECT Shoppingcart.ProductID, Inventory.name, Shoppingcart.Quantity, Inventory.Cost FROM shoppingcart INNER JOIN Inventory ON shoppingcart.productID = Inventory.productID WHERE OrderID =" . $_SESSION['orderId'] . "";
+	$test = $_SESSION['orderId'];
+	//$sql = "SELECT Shoppingcart.ProductID, Inventory.name, Shoppingcart.Quantity, Inventory.Cost FROM shoppingcart INNER JOIN Inventory ON shoppingcart.productID = Inventory.productID WHERE OrderID =" . $_SESSION['orderId'] . "";
+	$sql = "SELECT ShoppingCart.ProductID, Inventory.name, ShoppingCart.Quantity, Inventory.Cost FROM ShoppingCart INNER JOIN Inventory ON ShoppingCart.productID = Inventory.productID WHERE OrderID = '$test'";
 	$result = $conn->query($sql);
 
 	if ($result->num_rows > 0) {

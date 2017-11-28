@@ -5,7 +5,9 @@
 
 <div id="body-wr">
 <?php
-
+	error_reporting(E_ALL);
+	ini_set('display_errors',1);
+	
 	//Följande är för att lägg in i shoppingcart,  Vi bör använda POST också men använder get för att testa
 	if (isset($_GET["prodId"]) && isset($_GET["quantity"]) ){
 		if(!isset($_SESSION['user'])){
@@ -26,13 +28,13 @@
 					if($row = $result->fetch_assoc()) {
 						$_SESSION['orderId'] = $row["OrderID"];
 						
-						$sql2 = "SELECT productID FROM Shoppingcart WHERE OrderID = " . $_SESSION['orderId'] . " AND ProductID =" . $_GET["prodId"] . "";
-						$result2 = $conn->query($sql2);
-						if($result2->num_rows > 0){	//Detta är om det redan finns en produktID tillhörande den användaren i databasen
+						$sql = "SELECT productID FROM ShoppingCart WHERE OrderID = " . $_SESSION['orderId'] . " AND ProductID = " . $_GET["prodId"] . "";																		
+						$result = $conn->query($sql);
 						
-							if($row1 = $result2->fetch_assoc()) {
+						if($result->num_rows > 0){	//Detta är om det redan finns en produktID tillhörande den användaren i databasen						
+							if($row = $result->fetch_assoc()) {
 								
-								$sql = "UPDATE Shoppingcart SET Quantity = Quantity + " . $_GET["quantity"] . "  WHERE productID = " . $_GET["prodId"] . " AND orderID=" . $_SESSION['orderId'] . "" ;
+								$sql = "UPDATE ShoppingCart SET Quantity = Quantity + " . $_GET["quantity"] . "  WHERE productID = " . $_GET["prodId"] . " AND orderID=" . $_SESSION['orderId'] . "" ;
 								
 								$result = $conn->query($sql);
 								echo "Din varukorg hard updaterats!";
@@ -40,7 +42,7 @@
 						}
 						else{	//Detta sker om det inte ligger en vara med samma productID i varukorgen!
 						
-							$sql = "INSERT INTO Shoppingcart (OrderID, ProductID, Quantity)VALUES('" . $row["OrderID"] . "','" . $_GET["prodId"]."','" . $_GET["quantity"]."')";
+							$sql = "INSERT INTO ShoppingCart (OrderID, ProductID, Quantity)VALUES('" . $row["OrderID"] . "','" . $_GET["prodId"]."','" . $_GET["quantity"]."')";
 							$result = $conn->query($sql);
 							$_SESSION['orderId'] = $row["OrderID"];
 							echo "Din shoppincart är updaterad";
@@ -98,7 +100,7 @@ if ($result->num_rows > 0) {
     echo "There is no products in the database, please contact admin";
 }
 $conn->close();
-
+ 
  
 ?>
 
