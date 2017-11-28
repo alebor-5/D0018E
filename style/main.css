@@ -81,7 +81,7 @@ background:#444;
 .dropdown{
 	float: right;
 	display: inline-block;
-	padding-right: 50px; //Flytta login iconen här
+	padding-right: 45px; //Flytta login iconen här
 }
 .dropdown-content{
 	display: none;
@@ -162,4 +162,37 @@ background:#444;
 	height:100px;
 	margin:0px auto;
 	border-bottom:1px solid #ccc;
+}
+
+/* message box när beställning är gjord*/
+.alert {
+	border-style: solid;
+	border-color: #000000;
+    background-color: #4CAF50;
+    color: white;
+	display: inline-block;
+	width: 300px;
+	height: 60px;
+	font-size: 22px;
+    line-height: 25px;
+}
+
+.alert a {
+	text-decoration: none;
+	padding-top: 20px;
+}
+
+/* message box knapp */
+.closebtn {
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* knapp hover effekt */
+.closebtn:hover {
+    color: #000000;
 }

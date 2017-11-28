@@ -33,14 +33,15 @@
 				<?php
 					if(isset($_SESSION['user'])){
 						if($_SESSION['user'] == 0){
-							echo '<a href="login.php" >Korg</a><br>
+							echo '<a href="order.php" >Beställ</a><br>
 							<a href="extra/logout.php" >Logga ut</a>';
 						}elseif($_SESSION['user'] == 1){
 							echo '<a href="login.php" >AdminGrejer</a><br>
 							<a href="extra/logout.php" >Logga ut</a>';
 						}						
 					} else{
-						echo '<a href="login.php" >Logga in</a><br>
+						echo '<a href="order.php" >Beställ</a><br>
+						<a href="login.php" >Logga in</a><br>
 						<a href="register.php" >Registrera</a>';
 					}
 				?>	

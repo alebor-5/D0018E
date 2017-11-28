@@ -17,7 +17,7 @@ if (isset($_POST['submit'])){
 	$invalid = 0; //check input faults
 	
 	//Error handlers
-	if(preg_match("/[^A-Za-zÅÄÖåäö]/", $firstName)){
+	if(preg_match("/[^A-Za-zÅÄÖåäö]/", $firstName) or strlen($firstName) == 0){
 		//invalid characters
 		$fname = "fname=1&";
 		$invalid++;
@@ -26,7 +26,7 @@ if (isset($_POST['submit'])){
 		$fname = "fname=0&";
 	}
 	
-	if(preg_match("/[^A-Za-zÅÄÖåäö]/", $lastName)){
+	if(preg_match("/[^A-Za-zÅÄÖåäö]/", $lastName) or strlen($lastName) == 0){
 		//invalid characters
 		$lname = "lname=1&";
 		$invalid++;
@@ -38,7 +38,7 @@ if (isset($_POST['submit'])){
 	$sql = "SELECT * FROM Account WHERE Email='$email'";	
 	$result = $conn->query($sql);
 	
-	if ($result->num_rows > 0) {
+	if ($result->num_rows > 0 or strlen($email) == 0) {
 		$mail = "mail=1&";
 		$invalid++;
 	}
@@ -50,13 +50,13 @@ if (isset($_POST['submit'])){
 	$sql = "SELECT * FROM Account WHERE Username='$username'";	
 	$result = $conn->query($sql);
 	
-	if ($result->num_rows > 0) {
+	if ($result->num_rows > 0 or strlen($lastName) == 0) {
 		//Username taken
 		$uname = "uname=1&";
 		$invalid++;
 		
 	}
-	elseif(preg_match("/[^A-Za-z0-9ÅÄÖåäö]/", $username)){
+	elseif(preg_match("/[^A-Za-z0-9ÅÄÖåäö]/", $username) or strlen($lastName) == 0){
 		//invalid characters
 		$uname = "uname=2&";
 		$invalid++;
@@ -65,17 +65,27 @@ if (isset($_POST['submit'])){
 		$uname = "uname=0&";
 	}
 	
-	if(preg_match("/[^0-9]/", $zipCode)){
+	if(preg_match("/[^A-Za-z0-9ÅÄÖåäö]/", $address) or strlen($address) == 0){
+		//invalid characters
+		$add = "add=1&";
+		$invalid++;
+	}
+	else{
+		$_SESSION['add'] = $address;
+		$add = "add=0&";
+	}
+	
+	if(preg_match("/[^0-9]/", $zipCode) or strlen($lastName) == 0){
 		//invalid characters
 		$zip = "zip=1";
 		$invalid++;
 	}
 	else{
-		$zip = "zip=0&";
+		$zip = "zip=0";
 	}
 	
 	if($invalid > 0){
-		header("Location: ../register.php?$fname$lname$mail$uname$zip");
+		header("Location: ../register.php?$fname$lname$mail$uname$add$zip");
 		exit();
 	}
 	

@@ -32,15 +32,22 @@ if (isset($_POST['submit'])){
 		$_SESSION['user'] = $row['Admin'];
 		$_SESSION['accID'] = $row['AccountID'];
 		
-		$sql = "SELECT OrderID FROM Orders WHERE AccountID =" . $_SESSION['accID'] . "";
- 			$result = $conn->query($sql); 			 
-			if($result->num_rows > 0){
-				if($row = $result->fetch_assoc()) {
-					$_SESSION['orderId'] = $row["OrderID"];
-				}
-			}
-		$pwd = "pwd=0";
+		$_SESSION['fname'] = $row['FirstName'];
+		$_SESSION['lname'] = $row['LastName'];
+		$_SESSION['mail'] = $row['Email'];
+		$_SESSION['add'] = $row['Address'];
+		$_SESSION['zip'] = $row['ZipCode'];
 		
+		$sql = "SELECT OrderID FROM Orders WHERE AccountID =" . $_SESSION['accID'] . "";
+		$result = $conn->query($sql); 
+		
+		if($result->num_rows > 0){
+			if($row = $result->fetch_assoc()) {
+				$_SESSION['orderId'] = $row["OrderID"];
+			}
+		}
+				
+		$pwd = "pwd=0";		
 		header("Location: ../index.php");
 		exit();
 		

@@ -29,6 +29,10 @@
 			$uname = "* Endast bokstäver & siffror";
 		}
 		
+		if($_GET['add'] == 1){
+			$add = "* Endast bokstäver & siffror";
+		}
+		
 		if($_GET['zip'] == 1){
 			$zip = "* Endast siffror";
 		}
