@@ -57,7 +57,7 @@
 					$result = $conn->query($sql);
 					if($result->num_rows > 0){			//Detta är om det redan finns en order tillhörande den användaren i databasen
 						if($row = $result->fetch_assoc()) {
-							$sql = "INSERT INTO Shoppingcart (OrderID, ProductID, Quantity)VALUES('" . $row["OrderID"] . "','" . $_GET["prodId"]."','" . $_GET["quantity"]."')";
+							$sql = "INSERT INTO ShoppingCart (OrderID, ProductID, Quantity)VALUES('" . $row["OrderID"] . "','" . $_GET["prodId"]."','" . $_GET["quantity"]."')";
 							$_SESSION['orderId'] = $row["OrderID"];
 							$result = $conn->query($sql);
 						}
