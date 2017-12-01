@@ -11,10 +11,11 @@ $add = $add2 = "";
 $zip = $zip2 = "";
 
 $ordered = False;
+$errPrint = "";
 
 //if(isset($_GET['account'])) {
 
-if(isset($_SESSION['user'])) {		//För iinloggade
+if(isset($_SESSION['user'])) {		//För inloggade
 	if(isset($_GET['account'])) {
 
 
@@ -145,11 +146,82 @@ else{//ej konto
 	<?php
 		if($ordered){
 			$ordered = False;
-			echo '<div class="alert">
+			
+			if(isset($_SESSION['user'])){	//Inloggad				
+				$sql = "SELECT ProductID, Quantity FROM ShoppingCart WHERE OrderID=" . $_SESSION['orderId'] . "";
+				$result = $conn->query($sql);
+				
+				if($result->num_rows > 0){ //Produkter i korgen för inloggad
+					while($row = $result->fetch_assoc()) {						
+						$sql2 = "SELECT ProductID, Name, Quantity  FROM Inventory WHERE ProductID=" . $row['ProductID'] . "";
+						$result2 = $conn->query($sql2);
+						
+						if($row2 = $result2->fetch_assoc()) {
+							if($row['Quantity'] > $row2['Quantity']){ //Användaren vill beställa mer än det som existerar
+								$errPrint .= "Du försöker beställa " . $row['Quantity'] . " " . $row2['Name'] . " men det finns endast " . $row2['Quantity'] . "<br>";
+							}
+						}									
+					}
+					if(strlen($errPrint) > 0){
+						$errPrint .= "Ändra antal i varukorgen eller vänta tills rätt mängd finns";
+					}
+				}
+				else{	//Inget i korgen för inloggad
+					$errPrint = "Din varukorg är tom";
+				}				
+			}
+			else{	//Inte inloggad
+				if(isset($_SESSION['prodIDs'])){ //Något i korgen för ej-inloggad
+					foreach($_SESSION['prodIDs'] as $tempId => $quant){
+						$sql = "SELECT ProductID, Name, Quantity  FROM Inventory WHERE ProductID=" . $tempId . "";
+						$result = $conn->query($sql);
+						
+						if($row = $result->fetch_assoc()) {
+							if($quant > $row['Quantity']){ //Användaren vill beställa mer än det som existerar
+								$errPrint .= "Du försöker beställa " . $quant . " " . $row['Name'] . " men det finns endast " . $row['Quantity'] . "<br>";
+							}
+						}			
+					}
+					if(strlen($errPrint) > 0){
+						$errPrint .= "Ändra antal i varukorgen eller vänta tills rätt mängd finns";
+					}
+				}
+				else{ //inget i korgen för ej-inloggad
+					$errPrint = "Din varukorg är tom";
+				}
+			}
+			
+			if(strlen($errPrint) > 0){								
+				echo '<div class="errAlert">
+					Ett fel har uppstått med beställningen<br>
+					' . $errPrint . '<br>
+					<a href="shoppingcart.php"><span class="closebtn">Tillbaks Till Varukorgen</span></a>
+				</div>';					
+			}
+			else{
+				//Tömmer varukorg
+				if(isset($_SESSION["orderId"])){
+					$sql = "DELETE FROM ShoppingCart WHERE OrderID=" . $_SESSION["orderId"]  . "";
+					
+					if ($conn->query($sql) === TRUE) {
+						//korg tömms
+					}
+					else {
+						echo "Error: varukorgen tömdes ej " . $conn->error;
+					}
+				}
+				else{	//För icke inloggade
+					unset($_SESSION['prodIDs']);
+				}
+				
+				
+				echo '<div class="alert">
 					Tack för din beställning<br>
 					Ditt orderID är: '. $tempOrderID . '<br>
 					<a href="index.php"><span class="closebtn">Tillbaks Till Startsidan</span></a>
 				</div>';
+			}
+				
 		}
 	?>
 </div>

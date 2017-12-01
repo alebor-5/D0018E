@@ -171,23 +171,44 @@ background:#444;
     background-color: #4CAF50;
     color: white;
 	display: inline-block;
-	width: 300px;
-	height: 60px;
+	width: auto%;
+	height: auto%;
 	font-size: 22px;
     line-height: 25px;
+	
+	padding-right: 10px;
+	padding-left: 10px;
 }
 
 .alert a {
 	text-decoration: none;
-	padding-top: 20px;
 }
 
-/* message box knapp */
+.errAlert {
+	border-style: solid;
+	border-color: #000000;
+    background-color: #f44336;
+    color: white;
+	display: inline-block;
+	width: auto%;
+	height: auto%;
+	font-size: 22px;
+    line-height: 25px;
+	
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+.errAlert a {
+	text-decoration: none;
+}
+
+/* message box knapp   */
 .closebtn {
     color: white;
     font-weight: bold;
     font-size: 12px;
-    line-height: 10px;
+    line-height: 25px;
     cursor: pointer;
     transition: 0.3s;
 }

@@ -21,7 +21,7 @@
 		}
 		else{ //Dessa är för de inloggade!
 			
-			$sql = "SELECT OrderID FROM Orders WHERE AccountID =" . $_SESSION['accID'] . "";
+			$sql = "SELECT OrderID FROM Orders WHERE AccountID =" . $_SESSION['accID'] . " AND OrderDate IS NULL"; //Nu skapas en ny order istället för att den gammla ersätts
 			$result = $conn->query($sql);
 			 
 				if($result->num_rows > 0){			//Detta är om det redan finns en order tillhörande den användaren i databasen
@@ -53,7 +53,7 @@
 					$sql = "INSERT INTO Orders (AccountID) VALUES ('" . $_SESSION['accID'] . "')";
 					$result = $conn->query($sql);
 					
-					$sql = "SELECT OrderID FROM Orders WHERE AccountID =" . $_SESSION['accID'] . "";
+					$sql = "SELECT OrderID FROM Orders WHERE AccountID =" . $_SESSION['accID'] . " AND OrderDate IS NULL";
 					$result = $conn->query($sql);
 					if($result->num_rows > 0){			//Detta är om det redan finns en order tillhörande den användaren i databasen
 						if($row = $result->fetch_assoc()) {
