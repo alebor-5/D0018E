@@ -11,11 +11,11 @@
 				echo "Din varukorg är nu tömd";			//DENNA MÅSTE FIXAS GRAFISKT
 			}
 			else {
-			echo "Något gick snett: " . $conn->error;
+				echo "Något gick snett: " . $conn->error;
 			}
 		}
 		else{	//För icke inloggade
-			session_unset();
+			unset($_SESSION['prodIDs']);	//Om en icke-inloggad tömde hela inkogen med session_unset() så tömdes även sessions för beställning
 	}
 
 	}
@@ -62,7 +62,7 @@ if(!isset($_SESSION['user'])){ //Detta är för icke inloggade användare!
 			$sql = "SELECT name, Cost, URL FROM Inventory WHERE ProductID=" . $tempId  . "";
 			$result = $conn->query($sql);
 
-			while($row = $result->fetch_assoc()) {
+			while($row = $result->fetch_assoc()) { //WHERE ProductID sql queryn ger endast en rad? borde ha if istället för while? Undrar bara om jag har förstått rätt
 			 //echo $row["name"]. "  Cost: " . $row["Cost"]. "  antal:" .  $quant;
 			$summa += $quant * $row["Cost"];
 			$totalquantity += $quant;
