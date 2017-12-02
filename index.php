@@ -91,7 +91,7 @@ if ($result->num_rows > 0) {
 		}
 		
 		*/
-		echo "<div class='main-placer'><img src='" . $filename . "' class='smallpic' /> Namn: " . $row["name"]. "  Cost: " . $row["Cost"]. " sek  Quantity: " . $row["Quantity"]. "st 
+		echo "<div class='main-placer'><a class='linktoprod' href='product.php?prodId=" . $row['ProductID'] . "'><img src='" . $filename . "' class='smallpic' /> Namn: " . $row["name"]. "  Cost: " . $row["Cost"]. " sek  Quantity: " . $row["Quantity"]. "st </a> 
 		<form action='index.php' method='get'>
 			<input id='quantity' name='quantity' type='number' value='1' min='1' max='".  $row["Quantity"] ."' />
 		<input id='prodId' name='prodId' type='hidden' value=" . $row["ProductID"]. "> 

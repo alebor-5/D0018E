@@ -59,7 +59,7 @@ if(!isset($_SESSION['user'])){ //Detta är för icke inloggade användare!
 		foreach($_SESSION['prodIDs'] as $tempId => $quant){
 
 
-			$sql = "SELECT name, Cost, URL FROM Inventory WHERE ProductID=" . $tempId  . "";
+			$sql = "SELECT ProductID, name, Cost, URL FROM Inventory WHERE ProductID=" . $tempId  . "";
 			$result = $conn->query($sql);
 
 			while($row = $result->fetch_assoc()) { //WHERE ProductID sql queryn ger endast en rad? borde ha if istället för while? Undrar bara om jag har förstått rätt
@@ -69,9 +69,9 @@ if(!isset($_SESSION['user'])){ //Detta är för icke inloggade användare!
 			$filename = $row["URL"];
 
 
-			echo "<div class='cart-placer'><img src='" . $filename . "' class='smallpic' /> <div class='cartName'>" . $row["name"]. "</div>";
+			echo "<div class='cart-placer'><a class='linktoprod' href='product.php?prodId=" . $row['ProductID'] . "'> <img src='" . $filename . "' class='smallpic' /> <div class='cartName'>" . $row["name"]. "</a></div>";
 			echo	"<form action='shoppingcart.php' method='get'><input type='hidden' name='remove' value=" . $tempId . " ><input type='submit' value='' /></form>
-			<div class='cartCost'>  " . $row["Cost"]. " kr </div><div class='cartQuant'> " . $quant. "st</div>
+			<div class='cartCost'>  " . $row["Cost"]. " kr </div><div class='cartQuant'> " . $quant. "st </div>
 			</div>";
 
 			}
@@ -82,7 +82,7 @@ if(!isset($_SESSION['user'])){ //Detta är för icke inloggade användare!
 
 if(isset($_SESSION['user']) && isset($_SESSION['orderId'])){
 
-	$sql = "SELECT ShoppingCart.ProductID, Inventory.name, ShoppingCart.Quantity, Inventory.Cost FROM ShoppingCart INNER JOIN Inventory ON ShoppingCart.productID = Inventory.productID WHERE OrderID =" . $_SESSION['orderId'] . "";
+	$sql = "SELECT ShoppingCart.ProductID, Inventory.name, Inventory.URL, ShoppingCart.Quantity, Inventory.Cost FROM ShoppingCart INNER JOIN Inventory ON ShoppingCart.productID = Inventory.productID WHERE OrderID =" . $_SESSION['orderId'] . "";
 	$result = $conn->query($sql);
 
 	if ($result->num_rows > 0) {
@@ -90,20 +90,15 @@ if(isset($_SESSION['user']) && isset($_SESSION['orderId'])){
 
 		while($row = $result->fetch_assoc()) {
 
-			$filename =  'img/products/' . $row["ProductID"] . '.png';
-			if(is_file($filename)){
-				$filename = 'img/products/' . $row["ProductID"] . '.png';
-			}
-			else{
-				$filename = 'img/products/standard.png';
-			}
+			$filename = $row["URL"];
+			
 			$summa = $summa + $row["Cost"] * $row["Quantity"];
 			$totalquantity += $row["Quantity"];
 
 
 
 
-echo "<div class='cart-placer'><img src='" . $filename . "'/> <div class='cartName'>" . $row["name"]. "</div>";
+echo "<div class='cart-placer'><a class='linktoprod' href='product.php?prodId=" . $row['ProductID'] . "'><img src='" . $filename . "' class='smallpic' /> <div class='cartName'>" . $row["name"]. "</a></div>";
 			echo	"<form action='shoppingcart.php' method='get'><input type='hidden' name='removeUser' value=" . $row["ProductID"] . " ><input type='submit' value='' /></form>
 			<div class='cartCost'>  " . $row["Cost"]. " kr </div><div class='cartQuant'> " . $row["Quantity"]. "st</div>
 			</div>";

@@ -74,6 +74,10 @@ background:#444;
 	float:right;
 
 }
+.linktoprod, .linktoprod:visited{
+	color:#000;
+	text-decoration:none;
+}
 .smallpic{
 		width:80px;
 		height:80px;
@@ -225,4 +229,78 @@ background:#444;
 /* knapp hover effekt */
 .closebtn:hover {
     color: #000000;
+}
+/* Produktsidan */
+.productDesc{
+	
+	width:900px;
+	height:400px;
+	margin:0px auto;
+	border-bottom:1px solid #ccc;
+}
+.productDesc img{
+		display:block;
+		float:left;
+		width:300px;
+		height:300px;
+}
+
+.productDesc p{
+	width:400px;
+	margin-top:30px;
+	height:150px;
+	float:right;
+	margin-left:100px;
+	
+}
+.headerholder{
+	
+	width:400px;
+	height:40px;
+	text-align:center;
+	float:right;
+}
+.buynowbox{
+	margin-right:50px;
+	float:right;
+	width:300px;
+	height:120px;
+	background-color:#ddd;
+	border:1px solid #ccc;
+	text-align:center;
+	
+}
+.buynowbox span{
+	font-size:32px;
+	font-weight:bold;
+}
+
+.specBuyBtn{
+	display:block;
+	margin:10px auto 0px auto;
+	width:250px;
+	height:50px;
+	background-color:#009500;
+	border:	1px solid #006300;
+	font-weight:bold;
+	color:#fff;
+}
+
+#comments-box{
+	width:900px;
+	min-height:150px;
+
+	margin:0px auto;
+	padding-top:10px;
+}
+#userReview{
+	width:800px;
+	height:100px;
+	margin:0px auto;
+}
+#userReview span{
+	cursor:pointer;
+}
+.checkedstar{
+	color: orange;
 }
