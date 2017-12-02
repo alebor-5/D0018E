@@ -70,7 +70,7 @@
 	}
 	//Slut på shoppingcart
 	
-$sql = "SELECT ProductID, name, Quantity, Cost FROM Inventory";
+$sql = "SELECT ProductID, name, Quantity, Cost, URL FROM Inventory";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -78,15 +78,20 @@ if ($result->num_rows > 0) {
 	
     while($row = $result->fetch_assoc()) {
 		
-		$filename =  'img/products/' . $row["ProductID"] . '.png';
-		if(is_file($filename)){
-			$filename = 'img/products/' . $row["ProductID"] . '.png';
-		}
-		else{
-			$filename = 'img/products/standard.png';
+	//	$filename =  'img/products/' . $row["ProductID"] . '.png';
+		//if(is_file($filename)){
+		//	$filename = 'img/products/' . $row["ProductID"] . '.png';
+		//}
+		//else{
+			$filename = $row["URL"];
+		//}
+		
+	/*	if(@getimagesize($filename)){		//Detta kan användas för att kolla om det finns en bild, men den tar lång tid på sig.
+			echo "okejokej";
 		}
 		
-		echo "<div class='main-placer'><img src='" . $filename . "'/> Namn: " . $row["name"]. "  Cost: " . $row["Cost"]. " sek  Quantity: " . $row["Quantity"]. "st 
+		*/
+		echo "<div class='main-placer'><img src='" . $filename . "' class='smallpic' /> Namn: " . $row["name"]. "  Cost: " . $row["Cost"]. " sek  Quantity: " . $row["Quantity"]. "st 
 		<form action='index.php' method='get'>
 			<input id='quantity' name='quantity' type='number' value='1' min='1' max='".  $row["Quantity"] ."' />
 		<input id='prodId' name='prodId' type='hidden' value=" . $row["ProductID"]. "> 
@@ -103,7 +108,7 @@ $conn->close();
  
  
 ?>
-
+<div class='main-placer'></div>
 
 </div>
 </body>

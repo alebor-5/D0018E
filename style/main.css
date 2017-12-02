@@ -45,7 +45,7 @@ background:#444;
 
 #body-wr{
 	width:1100px;
-	height:900px;
+	min-height:1000px;
 	background:#fff;
 	margin:0px auto;
 	
@@ -73,6 +73,10 @@ background:#444;
 	width:50px;
 	float:right;
 
+}
+.smallpic{
+		width:80px;
+		height:80px;
 }
 .login{
 	float: left;
@@ -172,7 +176,7 @@ background:#444;
     color: white;
 	display: inline-block;
 	width: 300px;
-	height: 60px;
+	height: 80px;
 	font-size: 22px;
     line-height: 25px;
 }

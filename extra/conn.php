@@ -1,6 +1,6 @@
 <?php
-$servername = "utbweb.its.ltu.se";
-$username = "antwah-5";
+$servername = "localhost";
+$username = "root";
 $password = "hejsan123";
 $dbname = "antwah5db";
 

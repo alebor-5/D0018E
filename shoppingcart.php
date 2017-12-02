@@ -59,22 +59,17 @@ if(!isset($_SESSION['user'])){ //Detta är för icke inloggade användare!
 		foreach($_SESSION['prodIDs'] as $tempId => $quant){
 
 
-			$sql = "SELECT name, Cost FROM Inventory WHERE ProductID=" . $tempId  . "";
+			$sql = "SELECT name, Cost, URL FROM Inventory WHERE ProductID=" . $tempId  . "";
 			$result = $conn->query($sql);
 
 			while($row = $result->fetch_assoc()) {
 			 //echo $row["name"]. "  Cost: " . $row["Cost"]. "  antal:" .  $quant;
 			$summa += $quant * $row["Cost"];
 			$totalquantity += $quant;
-			$filename =  'img/products/' . $tempId . '.png';
-			if(is_file($filename)){
-				$filename = 'img/products/' . $tempId . '.png';
-			}
-			else{
-				$filename = 'img/products/standard.png';
-			}
+			$filename = $row["URL"];
 
-			echo "<div class='cart-placer'><img src='" . $filename . "'/> <div class='cartName'>" . $row["name"]. "</div>";
+
+			echo "<div class='cart-placer'><img src='" . $filename . "' class='smallpic' /> <div class='cartName'>" . $row["name"]. "</div>";
 			echo	"<form action='shoppingcart.php' method='get'><input type='hidden' name='remove' value=" . $tempId . " ><input type='submit' value='' /></form>
 			<div class='cartCost'>  " . $row["Cost"]. " kr </div><div class='cartQuant'> " . $quant. "st</div>
 			</div>";
