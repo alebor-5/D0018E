@@ -38,7 +38,7 @@ if (isset($_POST['submit'])){
 		$_SESSION['add'] = $row['Address'];
 		$_SESSION['zip'] = $row['ZipCode'];
 		
-		$sql = "SELECT OrderID FROM Orders WHERE AccountID =" . $_SESSION['accID'] . "";
+		$sql = "SELECT OrderID FROM Orders WHERE AccountID =" . $_SESSION['accID'] . " AND OrderDate IS NULL";
 		$result = $conn->query($sql); 
 		
 		if($result->num_rows > 0){

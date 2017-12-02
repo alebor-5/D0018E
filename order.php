@@ -13,8 +13,6 @@ $zip = $zip2 = "";
 $ordered = False;
 $errPrint = "";
 
-//if(isset($_GET['account'])) {
-
 if(isset($_SESSION['user'])) {		//För inloggade
 	if(isset($_GET['account'])) {
 
@@ -200,11 +198,17 @@ else{//ej konto
 			}
 			else{
 				//Tömmer varukorg
-				if(isset($_SESSION["orderId"])){
-					$sql = "DELETE FROM ShoppingCart WHERE OrderID=" . $_SESSION["orderId"]  . "";
-					
+				if(isset($_SESSION["user"])){	//För inloggade 
+					$sql = "INSERT INTO Orders (AccountID) VALUES ('" . $_SESSION['accID'] . "')";				
 					if ($conn->query($sql) === TRUE) {
-						//korg tömms
+						$sql = "SELECT OrderID FROM Orders WHERE AccountID =" . $_SESSION['accID'] . " AND OrderDate IS NULL";
+						$result = $conn->query($sql); 
+						
+						if($result->num_rows > 0){
+							if($row = $result->fetch_assoc()) {
+								$_SESSION['orderId'] = $row["OrderID"];
+							}
+						}
 					}
 					else {
 						echo "Error: varukorgen tömdes ej " . $conn->error;
