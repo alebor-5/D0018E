@@ -1,6 +1,7 @@
 <?php
 	include_once 'extra/conn.php';
 	include_once 'extra/header.php';
+	
 
 //Används för att tömma varukorgen både för non-users och users!
 	if (isset($_GET["resCart"]))  {
@@ -27,7 +28,7 @@
 	}
 
 	if (isset($_GET["removeUser"])){
-		
+
 		$sql = "DELETE FROM ShoppingCart WHERE ProductID=" . $_GET["removeUser"]  . "";
 		if ($conn->query($sql) === TRUE) {
 			echo "Varan har tagits bort från din varukorg!";
@@ -91,7 +92,7 @@ if(isset($_SESSION['user']) && isset($_SESSION['orderId'])){
 		while($row = $result->fetch_assoc()) {
 
 			$filename = $row["URL"];
-			
+
 			$summa = $summa + $row["Cost"] * $row["Quantity"];
 			$totalquantity += $row["Quantity"];
 

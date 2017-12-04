@@ -1,48 +1,15 @@
 <?php
-$servername = "utbweb.its.ltu.se";
-$username = "antwah-5";
-$password = "hejsan123";
-$dbname = "antwah5db";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-
-?>
-
-<html>
-<head>
-<title>Test</title>
-<link rel="stylesheet" type="text/css" href="style/main.css" />
-</head>
-
-<body>
-<div id="top-wr">
-	<img src="img/logga.png" alt="Logga" />
-	
-	<form action="search_prod.php">
-		<input type="text" name="Search" placeholder="Sök produkt" />
-		<input type="submit" value="Sök" />
-	</form>
-	
-	<div id="accountandcart">
-		<a href="" ><img src="img/account.png" alt="Användare" /></a>
-		<a href=""><img src="img/kundvagn.png" alt="Kundvagn" id="temp" /></a>
-	</div>
-</div>
-
+	include_once 'extra/conn.php';
+	include_once 'extra/header.php';
+	include_once 'extra/admincheck.php';
+	?>
 <div id="body-wr">
-<!-- behöver kolla så admin konto aktiverat -->
+
 
 <?php
-
-$sql = "INSERT INTO Inventory ( Name, Quantity, Height, Weight, Cost)
-VALUES ('".$_POST["name"]."','".$_POST["quantity"]."','".$_POST["height"]."','".$_POST["weight"]."','".$_POST["cost"]."')";
+$conn->query("SET NAMES utf8");
+$sql = "INSERT INTO Inventory ( Name, Quantity, Height, Weight, Cost, Description, URL)
+VALUES ('".$_POST["name"]."','".$_POST["quantity"]."','".$_POST["height"]."','".$_POST["weight"]."','".$_POST["cost"]."','". $_POST["description"] . "','" . $_POST["url"] . "')";
 
 if ($conn->query($sql) === TRUE) {
     echo "New product is inserted into the database";

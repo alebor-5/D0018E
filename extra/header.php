@@ -36,7 +36,7 @@
 							echo '<a href="order.php" >Beställ</a><br>
 							<a href="extra/logout.php" >Logga ut</a>';
 						}elseif($_SESSION['user'] == 1){
-							echo '<a href="login.php" >AdminGrejer</a><br>
+							echo '<a href="admin.php" >AdminGrejer</a><br>
 							<a href="extra/logout.php" >Logga ut</a>';
 						}						
 					} else{

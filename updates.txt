@@ -1,0 +1,10 @@
+Fixat ranking och kommentarer.
+Fixat en bugg i order som gjorde att OrderDate sattes även om inte orden gick igenom.
+Fixat Layout på indexsidan. 
+Fixat sök functionen. Den tar nu allt som börjar på det man skrivit in. Ex "dxracer" ger två svar om man använt table coden i git.
+Admin meny sida ->ligger under "Admin Grejer atm"
+Admin modifiera
+admin kolla ordrar och skicka dom
+Finns en fil med sql inserts under "Table Codes här på github"
+Issue: Address klarade inte Väg 44 tror de e space
+Admin "ta bort" är ännu inte fixat

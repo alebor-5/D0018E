@@ -6,7 +6,7 @@ background:#444;
 	height:80px;
 	margin:0px auto;
 	background:#000;
-	
+
 }
 #top-wr img{
 	display:block;
@@ -48,7 +48,7 @@ background:#444;
 	min-height:1000px;
 	background:#fff;
 	margin:0px auto;
-	
+
 }
 
 .main-placer{
@@ -58,19 +58,103 @@ background:#444;
 	border-bottom:1px solid #ccc;
 	font-weight:bold;
 }
+.indexName{
+	text-align:center;
+	width:150px;
+	float:left;
+	height:45px;
+	padding-top:35px;
+}
+.indexCost{
+	text-align:center;
+	width:150px;
+	float:left;
+	height:45px;
+	padding-top:35px;
+}
+.indexQuantity{
+	text-align:center;
+	width:150px;
+	float:left;
+	height:45px;
+	padding-top:35px;
+}
+.indexForm{
+	height:45px;
+	padding-top:35px;
+	width:200px;
+	float:right;
+}
+.indexRating{
+	float:left;
+	width:100px;
+	height:45px;
+	padding-top:35px;
+	float:float;
+}
+#indexTopPlacer{
+	width:1000px;
+	height:20px;
+	margin:0px auto;
+	padding-top:25px;
+	border-bottom:1px solid #ccc;
+	font-weight:bold;
+	color:#999;
+}
+#indexTopPlacer :nth-child(1){
+	text-align:center;
+	height:20px;
+	width:95px;
+	float:left;
+}
+#indexTopPlacer :nth-child(2){
+	text-align:center;
+	height:20px;
+	width:150px;
+	float:left;
+}
+#indexTopPlacer :nth-child(3){
+	text-align:center;
+	height:20px;
+	width:150px;
+	float:left;
+}
+#indexTopPlacer :nth-child(4){
+	text-align:center;
+	height:20px;
+	width:150px;
+	float:left;
+}
+#indexTopPlacer :nth-child(5){
+	text-align:left;
+	height:20px;
+	width:150px;
+	float:left;
+	margin-left:10px;
+}
 .main-placer img{
 	margin-left:20px;
 	margin-top:10px;
+	float:left;
+	display:block;
 }
+
 .main-placer input[type=submit]{
 	width:150px;
 	height:30px;
-
 	float:right;
+	
+	display:block;
+	background-color:#009500;
+	border:	1px solid #006300;
+	font-weight:bold;
+	color:#fff;
+	border-right:none;
 }
 
 .main-placer input[type=number]{
 	width:50px;
+	height:29px;
 	float:right;
 
 }
@@ -108,12 +192,14 @@ background:#444;
 	color: black;
 	font-size: 20px;
 	line-height: 30px;
-	//margin-right: -160px; //ful fix för att centrera texten 
+	//margin-right: -160px; //ful fix för att centrera texten
 }
 
 .dropdown .dropdown-content a:hover{
-	text-decoration: underline; 
+	text-decoration: underline;
 }
+
+
 .cart-placer{
 	width:1000px;
 	height:100px;
@@ -188,7 +274,7 @@ background:#444;
 >>>>>>> f3a66f21f29c8aebcbaf45605e2ab8bd0c85dac0
 	font-size: 22px;
     line-height: 25px;
-	
+
 	padding-right: 10px;
 	padding-left: 10px;
 }
@@ -207,7 +293,7 @@ background:#444;
 	height: auto%;
 	font-size: 22px;
     line-height: 25px;
-	
+
 	padding-right: 10px;
 	padding-left: 10px;
 }
@@ -232,7 +318,7 @@ background:#444;
 }
 /* Produktsidan */
 .productDesc{
-	
+
 	width:900px;
 	height:400px;
 	margin:0px auto;
@@ -251,10 +337,10 @@ background:#444;
 	height:150px;
 	float:right;
 	margin-left:100px;
-	
+
 }
 .headerholder{
-	
+
 	width:400px;
 	height:40px;
 	text-align:center;
@@ -264,11 +350,11 @@ background:#444;
 	margin-right:50px;
 	float:right;
 	width:300px;
-	height:120px;
+	height:140px;
 	background-color:#ddd;
 	border:1px solid #ccc;
 	text-align:center;
-	
+
 }
 .buynowbox span{
 	font-size:32px;
@@ -303,4 +389,117 @@ background:#444;
 }
 .checkedstar{
 	color: orange;
+}
+.prating{
+width:200px;
+height:25px;
+margin:0px auto;
+}
+.prating span{
+	font-size:24px;
+	text-shadow:2px 2px 4px #000000;
+}
+
+.uncheckedstar{
+	color:#fff;
+}
+
+.ReviewBox{
+	width:800px;
+	padding: 40px;
+	min-height:100px;
+	margin:0px auto;
+	border-top:1px solid #ccc;
+}
+.FirstReviewBox{
+	width:800px;
+	padding: 40px;
+	min-height:100px;
+	margin:0px auto;
+	margin-top:100px;
+	border-top:1px solid #ccc;
+}
+
+/* Detta är för admin */
+
+#adminmenu{
+	width:800px;
+	height:200px;
+	margin:0px auto;
+	padding-top:30px;
+}
+#adminmenu ul{
+	font-size:23px;
+}
+#adminmenu ul li{
+	margin-top:20px;
+}
+#order-wr{
+	width:1000px;
+	min-height:200px;
+	margin:0px auto;
+}
+.orderPlacer{
+	width:1000px;
+	height:50px;
+	margin:0px auto;
+	padding-top:20px;
+	border-bottom:1px solid #ccc;
+	font-size:21px;
+	text-align:center;
+}
+.adminOrder{
+	height:50px;
+	width:100px;
+	float:left;
+	margin-left:50px;
+}
+
+.adminDate{
+	height:50px;
+	width:300px;
+	float:left;
+	margin-left:100px;
+}
+.adminOrderPlace table{
+	margin:0px auto;
+}
+.adminOrderPlace table td{
+	padding:5px 30px;
+	text-align:center;
+}
+#orderCart{
+	width:800px;
+	height:200px;
+	margin:0px auto;
+	margin-top:50px;
+}
+#orderCart table{
+	margin:0px auto;
+}
+#orderCart table td{
+	padding:5px 30px;
+	text-align:center;
+}
+
+.adminProductRow {
+	width:1000px;
+	height:100px;
+	padding-top:50px;
+	
+	border-bottom:1px solid #ccc;
+}
+.adminProductRow [name=prodId], .adminProductRow [name=quantity], .adminProductRow [name=height], .adminProductRow [name=weight]{
+	width:40px;
+}
+.adminProductRow [name=cost]{
+	width:60px;
+}
+
+#body-wr1{
+	width:1100px;
+	min-height:1900px;
+	background:#fff;
+	margin:0px auto;
+
 }
