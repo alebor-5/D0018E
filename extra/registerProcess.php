@@ -8,7 +8,7 @@ if (isset($_POST['submit'])){
 	$lastName = $_POST['lastName'];
 	$email = $_POST['email'];
 	$username = $_POST['username'];
-	$password = $_POST['password'];
+	$password = password_hash($_POST['password'], PASSWORD_DEFAULT); //Hashar och saltar lösenordet. Använder bcrypt.
 	$address = $_POST['address'];
 	$zipCode = $_POST['zipCode'];
 	$admin = 0;
@@ -88,6 +88,8 @@ if (isset($_POST['submit'])){
 		header("Location: ../register.php?$fname$lname$mail$uname$add$zip");
 		exit();
 	}
+	
+	
 	
 	//Valid input	
 	$sql = "INSERT INTO Account (FirstName, LastName, Username, Pwd, Address, ZipCode, Email, Admin) VALUES ('$firstName', '$lastName', '$username', '$password', '$address', '$zipCode', '$email', '$admin' );";

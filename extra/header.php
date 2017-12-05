@@ -34,6 +34,7 @@
 					if(isset($_SESSION['user'])){
 						if($_SESSION['user'] == 0){
 							echo '<a href="order.php" >Beställ</a><br>
+							<a href="mypage.php" >Min sida</a><br>
 							<a href="extra/logout.php" >Logga ut</a>';
 						}elseif($_SESSION['user'] == 1){
 							echo '<a href="admin.php" >AdminGrejer</a><br>

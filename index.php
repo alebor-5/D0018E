@@ -17,14 +17,14 @@
 	ini_set('display_errors',1);
 
 	//Följande är för att lägg in i shoppingcart,  Vi bör använda POST också men använder get för att testa
-	if (isset($_GET["prodId"]) && isset($_GET["quantity"]) ){
+	if (isset($_POST["prodId"]) && isset($_POST["quantity"]) ){
 		if(!isset($_SESSION['user'])){
-			if(!isset($_SESSION['prodIDs'][$_GET["prodId"]])){		//dessa if else satserna är för icke inloggade!!!
+			if(!isset($_SESSION['prodIDs'][$_POST["prodId"]])){		//dessa if else satserna är för icke inloggade!!!
 
-				$_SESSION['prodIDs'][$_GET["prodId"]] =  $_GET["quantity"];
+				$_SESSION['prodIDs'][$_POST["prodId"]] =  $_POST["quantity"];
 			}
 			else{
-				$_SESSION['prodIDs'][$_GET["prodId"]] +=  $_GET["quantity"];
+				$_SESSION['prodIDs'][$_POST["prodId"]] +=  $_POST["quantity"];
 			}
 		}
 		else{ //Dessa är för de inloggade!
@@ -36,13 +36,13 @@
 					if($row = $result->fetch_assoc()) {
 						$_SESSION['orderId'] = $row["OrderID"];
 
-						$sql = "SELECT productID FROM ShoppingCart WHERE OrderID = " . $_SESSION['orderId'] . " AND ProductID = " . $_GET["prodId"] . "";
+						$sql = "SELECT productID FROM ShoppingCart WHERE OrderID = " . $_SESSION['orderId'] . " AND ProductID = " . $_POST["prodId"] . "";
 						$result = $conn->query($sql);
 
 						if($result->num_rows > 0){	//Detta är om det redan finns en produktID tillhörande den användaren i databasen
 							if($row = $result->fetch_assoc()) {
 
-								$sql = "UPDATE ShoppingCart SET Quantity = Quantity + " . $_GET["quantity"] . "  WHERE productID = " . $_GET["prodId"] . " AND orderID=" . $_SESSION['orderId'] . "" ;
+								$sql = "UPDATE ShoppingCart SET Quantity = Quantity + " . $_POST["quantity"] . "  WHERE productID = " . $_POST["prodId"] . " AND orderID=" . $_SESSION['orderId'] . "" ;
 
 								$result = $conn->query($sql);
 								echo "Din varukorg hard updaterats!";
@@ -50,7 +50,7 @@
 						}
 						else{	//Detta sker om det inte ligger en vara med samma productID i varukorgen!
 
-							$sql = "INSERT INTO ShoppingCart (OrderID, ProductID, Quantity)VALUES('" . $row["OrderID"] . "','" . $_GET["prodId"]."','" . $_GET["quantity"]."')";
+							$sql = "INSERT INTO ShoppingCart (OrderID, ProductID, Quantity)VALUES('" . $row["OrderID"] . "','" . $_POST["prodId"]."','" . $_POST["quantity"]."')";
 							$result = $conn->query($sql);
 							$_SESSION['orderId'] = $row["OrderID"];
 							echo "Din shoppincart är updaterad";
@@ -65,7 +65,7 @@
 					$result = $conn->query($sql);
 					if($result->num_rows > 0){			//Detta är om det redan finns en order tillhörande den användaren i databasen
 						if($row = $result->fetch_assoc()) {
-							$sql = "INSERT INTO ShoppingCart (OrderID, ProductID, Quantity)VALUES('" . $row["OrderID"] . "','" . $_GET["prodId"]."','" . $_GET["quantity"]."')";
+							$sql = "INSERT INTO ShoppingCart (OrderID, ProductID, Quantity)VALUES('" . $row["OrderID"] . "','" . $_POST["prodId"]."','" . $_POST["quantity"]."')";
 							$_SESSION['orderId'] = $row["OrderID"];
 							$result = $conn->query($sql);
 						}
@@ -87,7 +87,7 @@ if ($result->num_rows > 0) {
 
 		echo "<div class='main-placer'><a class='linktoprod' href='product.php?prodId=" . $row['ProductID'] . "'><img src='" . $filename . "' class='smallpic' /> <div class='indexName'>" . $row["name"]. "</div><div class='indexCost'>" . $row["Cost"]. " kr </div> <div class='indexQuantity'>" . $row["Quantity"]. "st</div>
 		<div class='indexRating'>".writeRating($row['ProductID'])."</div>	</a>
-		<div class='indexForm'><form action='index.php' method='get'>
+		<div class='indexForm'><form action='index.php' method='POST'>
 			<input id='quantity' name='quantity' type='number' value='1' min='1' max='".  $row["Quantity"] ."' />
 		<input id='prodId' name='prodId' type='hidden' value=" . $row["ProductID"]. ">
 

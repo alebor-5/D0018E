@@ -6,28 +6,30 @@
 	error_reporting(E_ALL);
 	ini_set('display_errors',1);
 ?>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!--vafan vi kan ju inte sno någons css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!--Till stjärnorna -->
 <div id="body-wr">
 
 
 
 <?php	//Detta är för rating samt kommentarer
 	if(isset($_POST["Comment"]) && isset($_POST["starRating"]) && isset($_SESSION["user"])){
-		if(!empty($POST["Comment"])){//Om review har ingen text så accepteras den inte
+		if(!empty($_POST["Comment"])){//Om review har ingen text så accepteras den inte
 			$conn->query("SET NAMES utf8");
 			$sql = "INSERT INTO Comments (Review,Rating,ProductID,AccountID) VALUES ('" . $_POST['Comment'] . "', '". $_POST["starRating"] . "','" . $_GET["prodId"] . "','" . $_SESSION["accID"] . "')";
 			$result = $conn->query($sql);
 				if($result){			//Detta är om det redan finns en order tillhörande den användaren i databasen
-					echo "Tack för din recension!";
+					header("Location: product.php?prodId=" . $_GET['prodId'] . ""); //Denna raden löser så att min inte kan stå och refresha sidan för att skicka samma review igen.
 				}
 				else if(!isset($_SESSION["user"]) && isset($_POST["Comment"]) && isset($_POST["starRating"])){
 					echo "Vänligen logga in för att lägga en recension!";
 				}
+				
 		}
 		else{
 			echo "Du måste skriva något";
 			//Användaren bör bli meddelad att reviews kräver text
 		}
+
 	}
 	
 
@@ -147,7 +149,7 @@
 			<span id="star5" class="fa fa-star" onclick="check(this.id,this)"></span>
 	<p>Skriv en recension om produkten:</p>
 	<form action="product.php?prodId=<?php echo $_GET['prodId']; ?>" method="post">
-		<textarea rows="4" cols="50"name="Comment"></textarea>
+		<textarea rows="4" cols="50" name="Comment"></textarea>
 		<input id="starRating" type="hidden" value="0" name="starRating" />
 		<input type="submit" value="Skicka din review" />
 	</form>
@@ -168,11 +170,11 @@
 				
 				if($row2 = $result2->fetch_assoc()){
 					if($firstTemp && ($row["Review"] != " ")){
-						echo "<div class='FirstReviewBox'><h2>" . $row["Username"]. "</h2><div class='prating'>".reviewRating($row2["Rating"])."</div><p>" .htmlspecialchars( $row["Review"]) . "</p></div>";
+						echo "<div class='FirstReviewBox'><h2>" . $row["Username"]. "</h2><div class='ratingfix'>".reviewRating($row2["Rating"])."</div><p class='textcomment'>" .htmlspecialchars( $row["Review"]) . "</p></div>";
 						$firstTemp = False;
 					}
 					else if(($row["Review"] != " ")){
-						echo "<div class='ReviewBox'><h2>" . $row["Username"]. "</h2><div class='prating'>".reviewRating($row2["Rating"])."</div><p>" . htmlspecialchars( $row["Review"]) . "</p></div>";
+						echo "<div class='ReviewBox'><h2>" . $row["Username"]. "</h2><div class='ratingfix'>".reviewRating($row2["Rating"])."</div><p class='textcomment'>" . htmlspecialchars( $row["Review"]) . "</p></div>";
 					}
 				}
 				

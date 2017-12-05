@@ -27,7 +27,7 @@ if (isset($_POST['submit'])){
 	
 	$row = $result->fetch_assoc();
 	
-	if($row["Pwd"] === $password){
+	if(password_verify($password,$row["Pwd"])){
 		//login success
 		$_SESSION['user'] = $row['Admin'];
 		$_SESSION['accID'] = $row['AccountID'];

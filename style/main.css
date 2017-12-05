@@ -96,7 +96,7 @@ background:#444;
 
 .indexRating span{
 	font-size:16px;
-	text-shadow:2px 2px 4px #000000;
+	text-shadow:2px 2px 4px #444;
 }
 
 #indexTopPlacer{
@@ -404,7 +404,7 @@ margin:0px auto;
 }
 .prating span{
 	font-size:24px;
-	text-shadow:2px 2px 4px #000000;
+	text-shadow:2px 2px 4px #444;
 }
 
 .uncheckedstar{
@@ -421,6 +421,7 @@ margin:0px auto;
 
 .ReviewBox h2{
 	display: inline;
+	float:left;
 }
 
 .FirstReviewBox{
@@ -435,6 +436,25 @@ margin:0px auto;
 
 .FirstReviewBox h2{
 	display: inline;
+	float:left;
+}
+
+.ratingfix{
+	padding-left:20px;
+	float:left;
+	width:200px;
+	height:25px;
+	margin:0px auto;
+}
+.ratingfix span{
+	padding-top:30px;
+	font-size:13px;
+	text-shadow:2px 2px 4px #444;
+}
+.textcomment{
+	width:500px;
+	clear:both;
+	top:100px;
 }
 
 /* Detta är för admin */
@@ -518,5 +538,33 @@ margin:0px auto;
 	min-height:1900px;
 	background:#fff;
 	margin:0px auto;
-
 }
+/* Slut på admin */
+
+/*För mypage */
+.userorderbox{
+	padding-top:20px;
+	width:900px;
+	magin:0px auto;
+}
+.userOrderInfo table, .userOrderInfo th, .userOrderInfo td{
+	text-align:center;
+	
+	
+}
+.orderTable{
+
+	width:900px;
+	border-collapse: collapse;
+}
+.trBorder{
+	border-bottom:1px solid #000;
+	border-top:1px solid #000;
+	height:50px;
+}
+tr.animate td{
+	
+	
+}
+
+/* Slut på mypage */
