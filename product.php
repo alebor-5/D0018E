@@ -1,26 +1,35 @@
 <?php
 	include_once 'extra/conn.php';
 	include_once 'extra/header.php';
-	include_once 'functions.php';
 	header('Content-type: text/html; charset=utf-8');
+	
+	error_reporting(E_ALL);
+	ini_set('display_errors',1);
 ?>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!--vafan vi kan ju inte sno någons css -->
 <div id="body-wr">
 
 
 
 <?php	//Detta är för rating samt kommentarer
 	if(isset($_POST["Comment"]) && isset($_POST["starRating"]) && isset($_SESSION["user"])){
-	$conn->query("SET NAMES utf8");
-	$sql = "INSERT INTO Comments (Review,Rating,ProductID,AccountID) VALUES ('" . $_POST['Comment'] . "', '". $_POST["starRating"] . "','" . $_GET["prodId"] . "','" . $_SESSION["accID"] . "')";
-	$result = $conn->query($sql);
-		if($result){			//Detta är om det redan finns en order tillhörande den användaren i databasen
-			echo "Tack för din recension!";
+		if(!empty($POST["Comment"])){//Om review har ingen text så accepteras den inte
+			$conn->query("SET NAMES utf8");
+			$sql = "INSERT INTO Comments (Review,Rating,ProductID,AccountID) VALUES ('" . $_POST['Comment'] . "', '". $_POST["starRating"] . "','" . $_GET["prodId"] . "','" . $_SESSION["accID"] . "')";
+			$result = $conn->query($sql);
+				if($result){			//Detta är om det redan finns en order tillhörande den användaren i databasen
+					echo "Tack för din recension!";
+				}
+				else if(!isset($_SESSION["user"]) && isset($_POST["Comment"]) && isset($_POST["starRating"])){
+					echo "Vänligen logga in för att lägga en recension!";
+				}
+		}
+		else{
+			echo "Du måste skriva något";
+			//Användaren bör bli meddelad att reviews kräver text
 		}
 	}
-	else if(!isset($_SESSION["user"]) && isset($_POST["Comment"]) && isset($_POST["starRating"])){
-		echo "Vänligen logga in för att lägga en recension!";
-	}
+	
 
 
 
@@ -99,8 +108,6 @@
 		if($row = $result->fetch_assoc()) {
 			$filename = $row["URL"];
 
-
-
 			echo "<div class='productDesc'>
 
 			<img src='". $filename . "' alt='Produktbild' />
@@ -109,7 +116,8 @@
 			<div class='buynowbox'>
 
 			<span> " . $row["Cost"] . " kr</span>
-			<div class='prating'>".writeRating($_GET["prodId"])."</div>
+			<div class='prating'>".writeRating($_GET["prodId"])."</div>			
+			
 			<form action='product.php?prodId=" . $_GET['prodId'] . "' method='post'>
 			<input id='quantity' name='quantity' type='hidden' value='1' />
 			<input id='prodId' name='prodId' type='hidden' value=" . $row["ProductID"]. ">
@@ -137,9 +145,9 @@
 			<span id="star3" class="fa fa-star " onclick="check(this.id,this)"></span>
 			<span id="star4" class="fa fa-star" onclick="check(this.id,this)"></span>
 			<span id="star5" class="fa fa-star" onclick="check(this.id,this)"></span>
-	<p>Skriv en recension om denna produkten:</p>
+	<p>Skriv en recension om produkten:</p>
 	<form action="product.php?prodId=<?php echo $_GET['prodId']; ?>" method="post">
-		<textarea rows="4" cols="50"name="Comment"> </textarea>
+		<textarea rows="4" cols="50"name="Comment"></textarea>
 		<input id="starRating" type="hidden" value="0" name="starRating" />
 		<input type="submit" value="Skicka din review" />
 	</form>
@@ -151,16 +159,25 @@
 		$firstTemp = True;
 		if(isset($_GET["prodId"])){
 			$conn->query("SET NAMES utf8");		//Denna behövs för att få åäö korrekt!
-			$sql = "SELECT Comments.Review, Account.Username FROM Comments INNER JOIN Account ON Comments.AccountID = Account.AccountID WHERE ProductID =" . $_GET["prodId"] . " AND Comments.Review IS NOT NULL" ;
+			$sql = "SELECT Comments.Review, Comments.CommentID, Account.Username FROM Comments INNER JOIN Account ON Comments.AccountID = Account.AccountID WHERE ProductID =" . $_GET["prodId"] . " AND Comments.Review IS NOT NULL" ;
 			$result = $conn->query($sql);
-			while($row = $result->fetch_assoc()) {	
-				if($firstTemp && ($row["Review"] != " ")){
-					echo "<div class='FirstReviewBox'> <h2>" . $row["Username"]. "</h2><p>" .htmlspecialchars( $row["Review"]) . "</p></div>";
-					$firstTemp = False;
+			
+			while($row = $result->fetch_assoc()) {
+				$sql2 = "SELECT Rating FROM Comments WHERE CommentID =" . $row["CommentID"] . " AND Rating IS NOT NULL" ;
+				$result2 = $conn->query($sql2);
+				
+				if($row2 = $result2->fetch_assoc()){
+					if($firstTemp && ($row["Review"] != " ")){
+						echo "<div class='FirstReviewBox'><h2>" . $row["Username"]. "</h2><div class='prating'>".reviewRating($row2["Rating"])."</div><p>" .htmlspecialchars( $row["Review"]) . "</p></div>";
+						$firstTemp = False;
+					}
+					else if(($row["Review"] != " ")){
+						echo "<div class='ReviewBox'><h2>" . $row["Username"]. "</h2><div class='prating'>".reviewRating($row2["Rating"])."</div><p>" . htmlspecialchars( $row["Review"]) . "</p></div>";
+					}
 				}
-				else if(($row["Review"] != " ")){
-					echo "<div class='ReviewBox'> <h2>" . $row["Username"]. "</h2><p>" . htmlspecialchars( $row["Review"]) . "</p></div>";
-				}
+				
+				
+				
 			}			
 		}
 	

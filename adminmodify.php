@@ -35,7 +35,7 @@
 <?php
 
 	$conn->query("SET NAMES utf8");
-	$sql = "SELECT * FROM inventory";
+	$sql = "SELECT * FROM Inventory";
 	$result = $conn->query($sql);
 	while($row = $result->fetch_assoc()){
 		echo "<div class='adminProductRow'>

@@ -25,9 +25,11 @@ function getRating ($pID){
   $Rating = 0;
 
 
-  while($row = $result->fetch_assoc()) { //WHERE ProductID sql queryn ger endast en rad? borde ha if istället för while? Undrar bara om jag har förstått rätt
-    $counts++;
-    $totalRating += $row["Rating"];
+  while($row = $result->fetch_assoc()) {
+	if($row["Rating"] > 0){ //Endast ratings mellan 1-5 används för räkna medelvärde. Användare som inte lämna något rating har inte "ratat".
+		$counts++;  
+	}
+	$totalRating += $row["Rating"];
   }
   if($counts==0){
     $Rating = 0;
@@ -90,8 +92,51 @@ function writeRating($pID){
     <span id="star5s" class="fa fa-star uncheckedstar" ></span>';
     break;
   }
+}
 
+function reviewRating($rating){
+  switch ($rating){
+    case 1:
+    return '<span id="star1s" class="fa fa-star checkedstar"></span>
+    <span id="star2s" class="fa fa-star uncheckedstar"></span>
+    <span id="star3s" class="fa fa-star uncheckedstar" ></span>
+    <span id="star4s" class="fa fa-star uncheckedstar" ></span>
+    <span id="star5s" class="fa fa-star uncheckedstar" ></span>';
+    break;
 
+    case 2:
+    return '<span id="star1s" class="fa fa-star checkedstar"></span>
+    <span id="star2s" class="fa fa-star checkedstar"></span>
+    <span id="star3s" class="fa fa-star uncheckedstar" ></span>
+    <span id="star4s" class="fa fa-star uncheckedstar" ></span>
+    <span id="star5s" class="fa fa-star uncheckedstar" ></span>';
+    break;
+
+    case 3:
+    return '<span id="star1s" class="fa fa-star checkedstar"></span>
+    <span id="star2s" class="fa fa-star checkedstar"></span>
+    <span id="star3s" class="fa fa-star checkedstar" ></span>
+    <span id="star4s" class="fa fa-star uncheckedstar" ></span>
+    <span id="star5s" class="fa fa-star uncheckedstar" ></span>';
+    break;
+
+    case 4:
+    return '<span id="star1s" class="fa fa-star checkedstar"></span>
+    <span id="star2s" class="fa fa-star checkedstar"></span>
+    <span id="star3s" class="fa fa-star checkedstar" ></span>
+    <span id="star4s" class="fa fa-star checkedstar" ></span>
+    <span id="star5s" class="fa fa-star uncheckedstar" ></span>';
+    break;
+
+    case 5:
+    return '<span id="star1s" class="fa fa-star checkedstar"></span>
+    <span id="star2s" class="fa fa-star checkedstar"></span>
+    <span id="star3s" class="fa fa-star checkedstar"></span>
+    <span id="star4s" class="fa fa-star checkedstar" ></span>
+    <span id="star5s" class="fa fa-star checkedstar" ></span>';
+    break;
+
+  }
 }
 
 

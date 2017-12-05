@@ -85,6 +85,7 @@ background:#444;
 	width:200px;
 	float:right;
 }
+
 .indexRating{
 	float:left;
 	width:100px;
@@ -92,6 +93,12 @@ background:#444;
 	padding-top:35px;
 	float:float;
 }
+
+.indexRating span{
+	font-size:16px;
+	text-shadow:2px 2px 4px #000000;
+}
+
 #indexTopPlacer{
 	width:1000px;
 	height:20px;
@@ -401,7 +408,7 @@ margin:0px auto;
 }
 
 .uncheckedstar{
-	color:#fff;
+	color: #fff;
 }
 
 .ReviewBox{
@@ -411,6 +418,11 @@ margin:0px auto;
 	margin:0px auto;
 	border-top:1px solid #ccc;
 }
+
+.ReviewBox h2{
+	display: inline;
+}
+
 .FirstReviewBox{
 	width:800px;
 	padding: 40px;
@@ -418,6 +430,11 @@ margin:0px auto;
 	margin:0px auto;
 	margin-top:100px;
 	border-top:1px solid #ccc;
+	display: inline-block;
+}
+
+.FirstReviewBox h2{
+	display: inline;
 }
 
 /* Detta är för admin */
