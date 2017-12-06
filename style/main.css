@@ -265,6 +265,40 @@ background:#444;
 	border-bottom:1px solid #ccc;
 }
 
+.menuBox {
+	border-style: solid;
+	border-color: #000000;
+    background-color: #444;
+	display: inline-block;
+    color: white;
+	width: auto%;
+	height: auto%;
+	
+	padding-right: 10px;
+	padding-left: 10px;
+	
+	/*
+	
+	*/
+}
+
+.menuBox a{
+	text-decoration: none;
+}
+
+.menuClose {
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 25px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.menuClose:hover {
+    color: #000000;
+}
+
 /* message box när beställning är gjord*/
 .alert {
 	border-style: solid;

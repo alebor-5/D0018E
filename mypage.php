@@ -5,12 +5,11 @@
 	
 ?>
 <div id="body-wr">
-	<div id="adminmenu">
-		<ul>
-			<li><a href="usercheckorders.php">Odrar</a></li>
-			
-		</ul>
-	
+	<div class="menuBox">
+		<a href="usercheckorders.php"><span class="menuClose">Ordar</span></a>
+	</div><!--
+	--><div class="menuBox">
+		<a href="usercomments.php"><span class="menuClose">Recensioner</span></a>
 	</div>
 
 </div>

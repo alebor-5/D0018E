@@ -8,7 +8,7 @@
 <div id="body-wr">
 	<div class="userorderbox">
 		<h1>Aktiva odrar</h1>
-		<p>Här är odrar som vi håller på att packa eller kontrollerar.</p>
+		<p>Här är ordrar som vi håller på att packa eller kontrollerar.</p>
 		
 		<?php 
 			$sql = "SELECT OrderID, OrderDate FROM Orders WHERE AccountID = '" . $_SESSION["accID"] . "' AND ShippedDate IS NULL AND OrderDate IS NOT NULL";

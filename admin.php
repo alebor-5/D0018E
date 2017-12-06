@@ -4,17 +4,21 @@
 	include_once 'extra/admincheck.php';
 ?>
 <div id="body-wr">
-	<div id="adminmenu">
-		<ul>
-			<li><a href="adminadd.php">Lägg till produkter.</a></li>
-			<li><a href="adminmodify.php">Modifiera produkter.</a></li>
-			<li><a href="admindelete.php">Ta bort produkter.</a></li>
-			<li><a href="checkorders.php">Se beställda odrar.</a></li>
-			<li><a href="oldorders.php">Se skickade odrar.</a></li>
 
-
-		</ul>
-	
+	<div class="menuBox">
+		<a href="adminadd.php"><span class="menuClose">Lägg till produkter</span></a>
+	</div><!--
+	--><div class="menuBox">
+		<a href="adminmodify.php"><span class="menuClose">Modifiera produkter</span></a>
+	</div><!--
+	--><div class="menuBox">
+		<a href="admindelete.php"><span class="menuClose">Ta bort produkter</span></a>
+	</div><!--
+	--><div class="menuBox">
+		<a href="checkorders.php"><span class="menuClose">Beställda ordrar</span></a>
+	</div><!--
+	--><div class="menuBox">
+		<a href="oldorders.php"><span class="menuClose">Skickade ordrar</span></a>
 	</div>
 
 </div>
