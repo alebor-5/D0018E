@@ -6,13 +6,14 @@
 	error_reporting(E_ALL);
 	ini_set('display_errors',1);
 ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!--Till stjärnorna -->
 <div id="body-wr">
 
 
 
 <?php	//Detta är för rating samt kommentarer
-	if(isset($_POST["Comment"]) && isset($_POST["starRating"]) && isset($_SESSION["user"])){
+	if(isset($_POST["Comment"]) && isset($_POST["starRating"]) && isset($_SESSION["user"]) && !isset($_POST["ResponseID"])){
 		if(!empty($_POST["Comment"])){//Om review har ingen text så accepteras den inte
 			$conn->query("SET NAMES utf8");
 			$sql = "INSERT INTO Comments (Review,Rating,ProductID,AccountID) VALUES ('" . $_POST['Comment'] . "', '". $_POST["starRating"] . "','" . $_GET["prodId"] . "','" . $_SESSION["accID"] . "')";
@@ -32,7 +33,17 @@
 
 	}
 	
-
+	if(isset($_POST["Comment"]) && !isset($_POST["starRating"]) && isset($_SESSION["user"]) && isset($_POST["ResponseID"])){
+			if(!empty($_POST["Comment"])){//Om review har ingen text så accepteras den inte
+			$conn->query("SET NAMES utf8");
+			$sql = "INSERT INTO Comments (Review,ProductID,AccountID, ResponseID) VALUES ('" . $_POST['Comment'] . "','" . $_GET["prodId"] . "','" . $_SESSION["accID"] . "','" . $_POST["ResponseID"] . "')";
+			$result = $conn->query($sql);
+			
+			if($result){
+				header("Location: product.php?prodId=" . $_GET['prodId'] . "");
+			}
+			}
+	}
 
 
 
@@ -161,7 +172,7 @@
 		$firstTemp = True;
 		if(isset($_GET["prodId"])){
 			$conn->query("SET NAMES utf8");		//Denna behövs för att få åäö korrekt!
-			$sql = "SELECT Comments.Review, Comments.CommentID, Account.Username FROM Comments INNER JOIN Account ON Comments.AccountID = Account.AccountID WHERE ProductID =" . $_GET["prodId"] . " AND Comments.Review IS NOT NULL" ;
+			$sql = "SELECT Comments.Review, Comments.CommentID, Account.Username FROM Comments INNER JOIN Account ON Comments.AccountID = Account.AccountID WHERE ProductID =" . $_GET["prodId"] . " AND Comments.Review IS NOT NULL AND ResponseID IS NULL " ;
 			$result = $conn->query($sql);
 			
 			while($row = $result->fetch_assoc()) {
@@ -170,11 +181,63 @@
 				
 				if($row2 = $result2->fetch_assoc()){
 					if($firstTemp && ($row["Review"] != " ")){
-						echo "<div class='FirstReviewBox'><h2>" . $row["Username"]. "</h2><div class='ratingfix'>".reviewRating($row2["Rating"])."</div><p class='textcomment'>" .htmlspecialchars( $row["Review"]) . "</p></div>";
+						echo "<div class='FirstReviewBox'><h2>" . $row["Username"]. "</h2><div class='ratingfix'>".reviewRating($row2["Rating"])."</div><p class='textcomment'>" . htmlspecialchars( $row["Review"]) . "</p>
+						<span class='FadeComments' id='fadeThisOut" . $row["CommentID"] . "'>Visa svar</span>
+						<div class='com-Wr'>";
+						
+						
+						$sql3 = "SELECT Comments.Review, Account.Username FROM Comments INNER JOIN Account ON Comments.AccountID = Account.AccountID WHERE ProductID =" . $_GET["prodId"] . " AND ResponseID =" . $row["CommentID"] . " AND Rating IS NULL" ;
+						$result3 = $conn->query($sql3);
+						while($row3 = $result3->fetch_assoc()){
+							echo "
+							<div class='answersToComments fadeThisOut" . $row["CommentID"] . "'  style='display:none;' >
+								<h4>". $row3["Username"] . "</h4>
+									<div class='innerAnswerToComments'>" . $row3["Review"] . "</div>
+							</div>";
+							
+						}
+						
+						echo "
+						<div ><span class='answerbox' id='answerCommentBox"  . $row["CommentID"] . "'>Svara</span></div>
+						<div class='answerCommentBox" . $row["CommentID"] . "' style='display:none;'>
+						<form action='product.php?prodId=" . $_GET['prodId'] . "' method='post'>
+						<input type='hidden' value='" . $row["CommentID"]. "' name='ResponseID' />
+						<textarea name='Comment'></textarea>
+						<input type='submit' value='skicka' />
+						</form>
+						</div>
+						</div>
+						</div>";
 						$firstTemp = False;
 					}
 					else if(($row["Review"] != " ")){
-						echo "<div class='ReviewBox'><h2>" . $row["Username"]. "</h2><div class='ratingfix'>".reviewRating($row2["Rating"])."</div><p class='textcomment'>" . htmlspecialchars( $row["Review"]) . "</p></div>";
+						echo "<div class='ReviewBox'><h2>" . $row["Username"]. "</h2><div class='ratingfix'>".reviewRating($row2["Rating"])."</div><p class='textcomment'>" . htmlspecialchars( $row["Review"]) . "</p>
+						<span class='FadeComments' id='fadeThisOut" . $row["CommentID"] . "'>Visa svar</span>
+						<div class='com-Wr'>";
+						
+						
+						$sql3 = "SELECT Comments.Review, Account.Username FROM Comments INNER JOIN Account ON Comments.AccountID = Account.AccountID WHERE ProductID =" . $_GET["prodId"] . " AND ResponseID =" . $row["CommentID"] . " AND Rating IS NULL" ;
+						$result3 = $conn->query($sql3);
+						while($row3 = $result3->fetch_assoc()){
+							echo "
+							<div class='answersToComments fadeThisOut" . $row["CommentID"] . "'  style='display:none;' >
+								<h4>". $row3["Username"] . "</h4>
+									<div class='innerAnswerToComments'>" . $row3["Review"] . "</div>
+							</div>";
+							
+						}
+						
+						echo "
+						<div ><span class='answerbox' id='answerCommentBox"  . $row["CommentID"] . "'>Svara</span></div>
+						<div class='answerCommentBox" . $row["CommentID"] . "' style='display:none;'>
+						<form action='product.php?prodId=" . $_GET['prodId'] . "' method='post'>
+						<input type='hidden' value='" . $row["CommentID"]. "' name='ResponseID' />
+						<textarea name='Comment'></textarea>
+						<input type='submit' value='skicka' />
+						</form>
+						</div>
+						</div>
+						</div>";
 					}
 				}
 				
@@ -192,6 +255,33 @@
 
 
 <script>
+
+
+$(document).ready(function(){
+    $(".FadeComments").click(function(){
+		var id = this.getAttribute( 'id' );
+		var TempText = $("#" + id).text();
+		console.log(TempText);
+
+        $("." +id).fadeToggle();
+
+    });
+});
+
+$(document).ready(function(){
+    $(".answerbox").click(function(){
+		var id = this.getAttribute( 'id' );
+		var TempText = $("#" + id).text();
+		console.log(TempText);
+
+        $("." +id).fadeToggle();
+
+    });
+});
+
+
+
+
 	function check(id,elem){
 		rating = document.getElementById("starRating");
 		//document.write("hej");

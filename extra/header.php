@@ -22,7 +22,7 @@
 	
 	<form action="search_prod.php">
 		<input type="text" name="Search" placeholder="Sök produkt" />
-		<input type="submit" value="Sök" />
+		<input type="submit" value="Sök" id="subheaderbtn" />
 	</form>
 	
 	<div id="accountandcart">
