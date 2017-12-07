@@ -170,10 +170,15 @@
 	
 	<?php	//Detta laddar in kommentarerna
 		$firstTemp = True;
+		$numAns = "";
+		$lastRow = 0;
+		$counter = 1;
+		
 		if(isset($_GET["prodId"])){
 			$conn->query("SET NAMES utf8");		//Denna behövs för att få åäö korrekt!
 			$sql = "SELECT Comments.Review, Comments.CommentID, Account.Username FROM Comments INNER JOIN Account ON Comments.AccountID = Account.AccountID WHERE ProductID =" . $_GET["prodId"] . " AND Comments.Review IS NOT NULL AND ResponseID IS NULL " ;
 			$result = $conn->query($sql);
+			$lastRow = $result->num_rows;
 			
 			while($row = $result->fetch_assoc()) {
 				$sql2 = "SELECT Rating FROM Comments WHERE CommentID =" . $row["CommentID"] . " AND Rating IS NOT NULL" ;
@@ -181,68 +186,84 @@
 				
 				if($row2 = $result2->fetch_assoc()){
 					if($firstTemp && ($row["Review"] != " ")){
-						echo "<div class='FirstReviewBox'><h2>" . $row["Username"]. "</h2><div class='ratingfix'>".reviewRating($row2["Rating"])."</div><p class='textcomment'>" . htmlspecialchars( $row["Review"]) . "</p>
-						<span class='FadeComments' id='fadeThisOut" . $row["CommentID"] . "'>Visa svar</span>
-						<div class='com-Wr'>";
-						
-						
 						$sql3 = "SELECT Comments.Review, Account.Username FROM Comments INNER JOIN Account ON Comments.AccountID = Account.AccountID WHERE ProductID =" . $_GET["prodId"] . " AND ResponseID =" . $row["CommentID"] . " AND Rating IS NULL" ;
 						$result3 = $conn->query($sql3);
-						while($row3 = $result3->fetch_assoc()){
-							echo "
-							<div class='answersToComments fadeThisOut" . $row["CommentID"] . "'  style='display:none;' >
-								<h4>". $row3["Username"] . "</h4>
-									<div class='innerAnswerToComments'>" . $row3["Review"] . "</div>
-							</div>";
-							
-						}
 						
-						echo "
+						echo "<div class='FirstReviewBox'><h2>" . $row["Username"]. "</h2><div class='ratingfix'>".reviewRating($row2["Rating"])."</div><p class='textcomment'>" . htmlspecialchars( $row["Review"]) . "</p>";
+						if($result3->num_rows > 0){							
+							$numAns = "($result3->num_rows)";	
+							echo "<span class='FadeComments' id='fadeThisOut" . $row["CommentID"] . "'>Visa svar $numAns</span>";
+														
+							while($row3 = $result3->fetch_assoc()){
+								echo "<div class='answersToComments fadeThisOut" . $row["CommentID"] . "'  style='display:none;' >
+										<h4>". $row3["Username"] . "</h4>
+										<div class='innerAnswerToComments'>" . $row3["Review"] . "</div>
+									</div>";							
+							}						
+						}
+											
+						echo "<div class='com-Wr'>
 						<div ><span class='answerbox' id='answerCommentBox"  . $row["CommentID"] . "'>Svara</span></div>
 						<div class='answerCommentBox" . $row["CommentID"] . "' style='display:none;'>
 						<form action='product.php?prodId=" . $_GET['prodId'] . "' method='post'>
-						<input type='hidden' value='" . $row["CommentID"]. "' name='ResponseID' />
-						<textarea name='Comment'></textarea>
-						<input type='submit' value='skicka' />
+							<input type='hidden' value='" . $row["CommentID"]. "' name='ResponseID' />
+							<textarea name='Comment'></textarea>
+							<input type='submit' value='skicka' />
 						</form>
 						</div>
 						</div>
 						</div>";
 						$firstTemp = False;
+						$counter++;
 					}
 					else if(($row["Review"] != " ")){
-						echo "<div class='ReviewBox'><h2>" . $row["Username"]. "</h2><div class='ratingfix'>".reviewRating($row2["Rating"])."</div><p class='textcomment'>" . htmlspecialchars( $row["Review"]) . "</p>
-						<span class='FadeComments' id='fadeThisOut" . $row["CommentID"] . "'>Visa svar</span>
-						<div class='com-Wr'>";
-						
-						
 						$sql3 = "SELECT Comments.Review, Account.Username FROM Comments INNER JOIN Account ON Comments.AccountID = Account.AccountID WHERE ProductID =" . $_GET["prodId"] . " AND ResponseID =" . $row["CommentID"] . " AND Rating IS NULL" ;
 						$result3 = $conn->query($sql3);
-						while($row3 = $result3->fetch_assoc()){
-							echo "
-							<div class='answersToComments fadeThisOut" . $row["CommentID"] . "'  style='display:none;' >
-								<h4>". $row3["Username"] . "</h4>
-									<div class='innerAnswerToComments'>" . $row3["Review"] . "</div>
-							</div>";
+						
+						echo "<div class='FirstReviewBox'><h2>" . $row["Username"]. "</h2><div class='ratingfix'>".reviewRating($row2["Rating"])."</div><p class='textcomment'>" . htmlspecialchars( $row["Review"]) . "</p>";
+						if($result3->num_rows > 0){							
+							$numAns = "($result3->num_rows)";							
+							echo "<span class='FadeComments' id='fadeThisOut" . $row["CommentID"] . "'>Visa svar $numAns</span>";
 							
+							while($row3 = $result3->fetch_assoc()){
+								echo "<div class='answersToComments fadeThisOut" . $row["CommentID"] . "'  style='display:none;' >
+										<h4>". $row3["Username"] . "</h4>
+										<div class='innerAnswerToComments'>" . $row3["Review"] . "</div>
+									</div>";							
+							}						
 						}
 						
-						echo "
-						<div ><span class='answerbox' id='answerCommentBox"  . $row["CommentID"] . "'>Svara</span></div>
-						<div class='answerCommentBox" . $row["CommentID"] . "' style='display:none;'>
-						<form action='product.php?prodId=" . $_GET['prodId'] . "' method='post'>
-						<input type='hidden' value='" . $row["CommentID"]. "' name='ResponseID' />
-						<textarea name='Comment'></textarea>
-						<input type='submit' value='skicka' />
-						</form>
-						</div>
-						</div>
-						</div>";
+						if($lastRow == $counter){//Sista kommentaren som printas ut
+							echo "<div class='padder'>
+							<div ><span class='answerbox' id='answerCommentBox"  . $row["CommentID"] . "'>Svara</span></div>
+							<div class='answerCommentBox" . $row["CommentID"] . "' style='display:none;'>
+							<form action='product.php?prodId=" . $_GET['prodId'] . "' method='post'>
+							<input type='hidden' value='" . $row["CommentID"]. "' name='ResponseID' />
+							<textarea name='Comment'></textarea>
+							<input type='submit' value='skicka' />
+							</form>
+							</div>
+							</div>
+							</div>";
+						}
+						else{
+							echo "<div class='com-Wr'>
+							<div ><span class='answerbox' id='answerCommentBox"  . $row["CommentID"] . "'>Svara</span></div>
+							<div class='answerCommentBox" . $row["CommentID"] . "' style='display:none;'>
+							<form action='product.php?prodId=" . $_GET['prodId'] . "' method='post'>
+							<input type='hidden' value='" . $row["CommentID"]. "' name='ResponseID' />
+							<textarea name='Comment'></textarea>
+							<input type='submit' value='skicka' />
+							</form>
+							</div>
+							</div>
+							</div>";
+							$counter++;
+						}
+						
+						
 					}
-				}
-				
-				
-				
+				}			
 			}			
 		}
 	

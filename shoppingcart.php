@@ -118,16 +118,16 @@ echo "<div class='cart-placer'><a class='linktoprod' href='product.php?prodId=" 
 ?>
 	 <div id='cartsummary'>
 		<p style="text-align:right;margin-right:100px;">Antal:<b> <?php echo $totalquantity; ?> st</b></p>
-		<p style="text-align:right;margin-right:100px;">Summa:<b> <?php echo $summa; ?> kr</b></p>
-
+		<p style="text-align:right;margin-right:100px;">Summa:<b> <?php echo $summa; ?> kr</b></p>		
+		<div class="orderBox">
+			<a href="order.php"><span class="orderClose">Beställ</span></a>
+		</div>
+		
 		<form action="shoppingcart.php" method="get">
 			<input id='resCart' name='resCart' type='hidden' value="1"/>
 			<input type="submit" value="Töm varukorg">
 		</form>
 	</div>
-
-
-
 
 
 </div>

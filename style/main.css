@@ -271,6 +271,34 @@ background:#444;
 	border-bottom:1px solid #ccc;
 }
 
+.orderBox {
+	float:right;
+	border-style: solid;
+	border-color: #000000;
+    background-color: white;
+	display: inline-block;
+    color: black;
+	width: auto%;
+	height: auto%;
+	
+	padding-right: 10px;
+	padding-left: 10px;
+	margin-right: 100px;
+}
+
+.orderBox a{
+	text-decoration: none;
+}
+
+.orderClose {
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 25px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
 .menuBox {
 	border-style: solid;
 	border-color: #000000;
@@ -282,10 +310,6 @@ background:#444;
 	
 	padding-right: 10px;
 	padding-left: 10px;
-	
-	/*
-	
-	*/
 }
 
 .menuBox a{
@@ -453,8 +477,6 @@ margin:0px auto;
 
 .ReviewBox{
 	width:800px;
-	padding: 40px;
-
 	margin:0px auto;
 	border-top:1px solid #ccc;
 }
@@ -466,9 +488,8 @@ margin:0px auto;
 
 .FirstReviewBox{
 	width:800px;
-	padding: 40px;
 	min-height:100px;
-	margin:0px auto;
+	margin:0px;
 	margin-top:100px;
 	border-top:1px solid #ccc;
 	display: inline-block;
@@ -497,6 +518,13 @@ margin:0px auto;
 	top:100px;
 }
 
+.padder{/*Endast till för att göra padding under den sista kommentaren/reviewn*/
+	padding-bottom: 60px;
+}
+
+.padder div{
+	margin:0px auto;
+}
 
 .com-Wr div{
 	margin:0px auto;
