@@ -220,7 +220,7 @@
 						$sql3 = "SELECT Comments.Review, Account.Username FROM Comments INNER JOIN Account ON Comments.AccountID = Account.AccountID WHERE ProductID =" . $_GET["prodId"] . " AND ResponseID =" . $row["CommentID"] . " AND Rating IS NULL" ;
 						$result3 = $conn->query($sql3);
 						
-						echo "<div class='FirstReviewBox'><h2>" . $row["Username"]. "</h2><div class='ratingfix'>".reviewRating($row2["Rating"])."</div><p class='textcomment'>" . htmlspecialchars( $row["Review"]) . "</p>";
+						echo "<div class='ReviewBox'><h2>" . $row["Username"]. "</h2><div class='ratingfix'>".reviewRating($row2["Rating"])."</div><p class='textcomment'>" . htmlspecialchars( $row["Review"]) . "</p>";
 						if($result3->num_rows > 0){							
 							$numAns = "($result3->num_rows)";							
 							echo "<span class='FadeComments' id='fadeThisOut" . $row["CommentID"] . "'>Visa svar $numAns</span>";

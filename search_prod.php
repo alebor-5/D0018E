@@ -6,7 +6,7 @@
 <div id="body-wr">
 <?php
 if(isset($_GET["Search"])){
-	$sql = "SELECT ProductID, name, Quantity, Cost, URL FROM Inventory WHERE Name LIKE '" . $_GET["Search"] . "%'";
+	$sql = "SELECT ProductID, name, Quantity, Cost, URL FROM Inventory WHERE Name LIKE '%" . $_GET["Search"] . "%'";
 	$result = $conn->query($sql);
 	if ($result->num_rows > 0) {
 		// output data of each row

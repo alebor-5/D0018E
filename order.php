@@ -101,9 +101,10 @@ else{//ej konto
 
 	<?php
 		if($ordered){
+			
 			$ordered = False;
 			
-			if(isset($_SESSION['user'])){	//Inloggad				
+			if(isset($_SESSION['user'])){	//Inloggad -----------------------------------------------------------				
 				$sql = "SELECT ProductID, Quantity FROM ShoppingCart WHERE OrderID=" . $_SESSION['orderId'] . "";
 				$result = $conn->query($sql);
 				
@@ -124,13 +125,14 @@ else{//ej konto
 						$errPrint .= "Ändra antal i varukorgen eller vänta tills rätt mängd finns";
 					}
 					//Slut på kollen!
-					if(!strlen($errPrint) > 0){
+					
 						//Detta uppdaterar lagret så att det blir rätt antal!
 						$sql = "SELECT ProductID, Quantity FROM ShoppingCart WHERE OrderID=" . $_SESSION['orderId'] . "";
 						$result = $conn->query($sql);
 						$products = array();
 						$quantity = array();
-						
+					try{//TRANS
+						$conn->query("START TRANSACTION");
 						if ($result->num_rows > 0) {
 							while($row = $result->fetch_assoc()) {
 								array_push($products,$row["ProductID"]);
@@ -144,27 +146,20 @@ else{//ej konto
 								echo "Please contact admin!";
 							}
 							
-							}
+						}
 											
 						//Slut på uppdatering av lagret
 						
 						$datetime = date_create()->format('Y-m-d H:i:s'); //Hämta tiden från server och använd denna som orderdate
 						$sql = "UPDATE Orders SET OrderDate='". $datetime . "' WHERE OrderID= '" . $_SESSION['orderId'] .  "'";
-						if ($conn->query($sql) === TRUE) {
-							$tempOrderID = $_SESSION['orderId'];
-				
-				
-							//Detta uppdaterar antalet i lagret!
-				
-
-							
-						}
-						else{
-							echo "Något gick snett, kontakta admin";
-						}
-						
+						$conn->query($sql);
+						$tempOrderID = $_SESSION['orderId'];
+						$conn->query("COMMIT");
+					}catch (Exception $e){//TRY TRANS
+						$conn->query("ROLLBACK");
 					}
-					//Slut på det
+					
+					//Slut på det -------------------------------------------------------------------------------------
 				}
 				else{	//Inget i korgen för inloggad
 					$errPrint = "Din varukorg är tom";
@@ -189,18 +184,18 @@ else{//ej konto
 				else{ //inget i korgen för ej-inloggad
 					$errPrint = "Din varukorg är tom";
 				}
-				
-				//Temp: placera här
 				if(!strlen($errPrint) > 0){
+				//Temp: placera här
+				try{//TRANS FÖR ICKE-INLOGGADE, även om detta kollas innan är detta en extra säkerhetsåtergärd
+					$conn->query("START TRANSACTION");
 					$datetime = date_create()->format('Y-m-d H:i:s'); //Hämta tiden från server och använd denna som orderdate
 					$sql = "INSERT INTO Orders( FirstName,LastName,Email,Address,ZipCode,OrderDate)
 					VALUES ('".$_SESSION['fname']."','".$_SESSION['lname'] ."','".$_SESSION['mail']."','".$_SESSION['add']."','".$_SESSION['zip']."','".$datetime ."')";
 					
-					if ($conn->query($sql) === TRUE) {
+						$conn->query($sql);
 						$tempOrderID = $conn->insert_id;
 
 						
-						echo "Din order är nu betald";
 
 							//Hitta vilket orderID som skapats för att kunna koppla detta till en ShoppingCart
 							//följande är om ordern har lagts in skall även shoppingcarten laddas upp i databasen!
@@ -224,10 +219,11 @@ else{//ej konto
 									//Slut på uppdatering av lager
 								}
 							}
-						}
-					else {
-						echo "Error: " . $sql . "<br>" . $conn->error . ". Please contact admin!";
-					}
+						$conn->query("COMMIT");
+				}catch (Exception $e){
+					$conn->query("ROLLBACK");
+					
+				}
 				}
 			}
 			

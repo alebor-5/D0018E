@@ -78,7 +78,7 @@
 	}
 	//Slut på shoppingcart
 
-$sql = "SELECT ProductID, name, Quantity, Cost, URL FROM Inventory";
+$sql = "SELECT ProductID, name, Quantity, Cost, URL FROM Inventory WHERE Quantity != 0";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     // output data of each row

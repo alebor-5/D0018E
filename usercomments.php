@@ -12,17 +12,12 @@
 <?php	//Detta laddar in kommentarerna
 	$firstTemp = True;
 	$conn->query("SET NAMES utf8");		//Denna behövs för att få åäö korrekt!
-	$sql = "SELECT Review, Rating FROM Comments WHERE AccountID =" . $_SESSION['accID'] . " AND Comments.Review IS NOT NULL" ;
+	$sql = "SELECT Comments.Review, Comments.Rating, Comments.ProductID, Inventory.Name  FROM Comments INNER JOIN Inventory ON Comments.ProductID = Inventory.ProductID WHERE AccountID =" . $_SESSION['accID'] . " AND Comments.Review IS NOT NULL" ;
 	$result = $conn->query($sql);
 	
 	while($row = $result->fetch_assoc()) {			
-		if($firstTemp && ($row["Review"] != " ")){
-			echo "<div class='FirstReviewBox'><h2>" . $_SESSION['uname']. "</h2><div class='ratingfix'>".reviewRating($row["Rating"])."</div><p class='textcomment'>" .htmlspecialchars( $row["Review"]) . "</p></div>";
+			echo "<div class='ReviewBox'><h2><a href='product.php?prodId=" . $row['ProductID'] . "'>" . $row["Name"] . "</a></h2><div class='ratingfix'>".reviewRating($row["Rating"])."</div><p class='textcomment'>" . htmlspecialchars( $row["Review"]) . "</p></div>";
 			$firstTemp = False;
-		}
-		else if(($row["Review"] != " ")){
-			echo "<div class='ReviewBox'><h2>" . $_SESSION['uname']. "</h2><div class='ratingfix'>".reviewRating($row["Rating"])."</div><p class='textcomment'>" . htmlspecialchars( $row["Review"]) . "</p></div>";
-		}		
 	}
 	if($firstTemp){
 		echo "Du har inga recensioner"; 

@@ -42,7 +42,7 @@ function getRating ($pID){
 
 function writeRating($pID){
   global $conn;
-  $Rating = getRating($pID);
+  $Rating = getRating($pID); 
   switch ($Rating){
     case 1:
     return '<span id="star1s" class="fa fa-star checkedstar"></span>

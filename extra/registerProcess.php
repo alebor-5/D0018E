@@ -65,7 +65,7 @@ if (isset($_POST['submit'])){
 		$uname = "uname=0&";
 	}
 	
-	if(preg_match("/[^A-Za-z0-9ÅÄÖåäö]/", $address) or strlen($address) == 0){
+	if(preg_match("/[^A-Za-z0-9ÅÄÖåäö ]/", $address) or strlen($address) == 0 or ctype_space($address)){
 		//invalid characters
 		$add = "add=1&";
 		$invalid++;
@@ -91,7 +91,8 @@ if (isset($_POST['submit'])){
 	
 	
 	
-	//Valid input	
+	//Valid input
+	$conn->query("SET NAMES utf8");		
 	$sql = "INSERT INTO Account (FirstName, LastName, Username, Pwd, Address, ZipCode, Email, Admin) VALUES ('$firstName', '$lastName', '$username', '$password', '$address', '$zipCode', '$email', '$admin' );";
 	if ($conn->query($sql) == TRUE){
 		header("Location: ../index.php?success");

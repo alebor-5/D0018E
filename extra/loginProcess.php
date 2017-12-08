@@ -11,7 +11,7 @@ if (isset($_POST['submit'])){
 	
 	
 	//Error handlers
-	
+	$conn->query("SET NAMES utf8");
 	$sql = "SELECT * FROM Account WHERE Username='$username'";	
 	$result = $conn->query($sql);
 	
