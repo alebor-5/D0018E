@@ -36,7 +36,7 @@
 	if(isset($_POST["Comment"]) && !isset($_POST["starRating"]) && isset($_SESSION["user"]) && isset($_POST["ResponseID"])){
 			if(!empty($_POST["Comment"])){//Om review har ingen text så accepteras den inte
 			$conn->query("SET NAMES utf8");
-			$sql = "INSERT INTO Comments (Review,ProductID,AccountID, ResponseID) VALUES ('" . $_POST['Comment'] . "','" . $_GET["prodId"] . "','" . $_SESSION["accID"] . "','" . $_POST["ResponseID"] . "')";
+			$sql = "INSERT INTO CommentResponses (Review,AccountID, ResponseID) VALUES ('" . $_POST['Comment'] . "','" . $_SESSION["accID"] . "','" . $_POST["ResponseID"] . "')";
 			$result = $conn->query($sql);
 			
 			if($result){
@@ -176,7 +176,7 @@
 		
 		if(isset($_GET["prodId"])){
 			$conn->query("SET NAMES utf8");		//Denna behövs för att få åäö korrekt!
-			$sql = "SELECT Comments.Review, Comments.CommentID, Account.Username FROM Comments INNER JOIN Account ON Comments.AccountID = Account.AccountID WHERE ProductID =" . $_GET["prodId"] . " AND Comments.Review IS NOT NULL AND ResponseID IS NULL " ;
+			$sql = "SELECT Comments.Review, Comments.CommentID, Account.Username FROM Comments INNER JOIN Account ON Comments.AccountID = Account.AccountID WHERE ProductID =" . $_GET["prodId"] . " AND Comments.Review IS NOT NULL" ;
 			$result = $conn->query($sql);
 			$lastRow = $result->num_rows;
 			
@@ -186,7 +186,7 @@
 				
 				if($row2 = $result2->fetch_assoc()){
 					if($firstTemp && ($row["Review"] != " ")){
-						$sql3 = "SELECT Comments.Review, Account.Username FROM Comments INNER JOIN Account ON Comments.AccountID = Account.AccountID WHERE ProductID =" . $_GET["prodId"] . " AND ResponseID =" . $row["CommentID"] . " AND Rating IS NULL" ;
+						$sql3 = "SELECT CommentResponses.Review, Account.Username FROM CommentResponses INNER JOIN Account ON CommentResponses.AccountID = Account.AccountID WHERE ResponseID =" . $row["CommentID"] . "" ;
 						$result3 = $conn->query($sql3);
 						
 						echo "<div class='FirstReviewBox'><h2>" . $row["Username"]. "</h2><div class='ratingfix'>".reviewRating($row2["Rating"])."</div><p class='textcomment'>" . htmlspecialchars( $row["Review"]) . "</p>";
@@ -217,7 +217,7 @@
 						$counter++;
 					}
 					else if(($row["Review"] != " ")){
-						$sql3 = "SELECT Comments.Review, Account.Username FROM Comments INNER JOIN Account ON Comments.AccountID = Account.AccountID WHERE ProductID =" . $_GET["prodId"] . " AND ResponseID =" . $row["CommentID"] . " AND Rating IS NULL" ;
+						$sql3 = "SELECT CommentResponses.Review, Account.Username FROM CommentResponses INNER JOIN Account ON CommentResponses.AccountID = Account.AccountID WHERE ResponseID =" . $row["CommentID"] . "" ;
 						$result3 = $conn->query($sql3);
 						
 						echo "<div class='ReviewBox'><h2>" . $row["Username"]. "</h2><div class='ratingfix'>".reviewRating($row2["Rating"])."</div><p class='textcomment'>" . htmlspecialchars( $row["Review"]) . "</p>";
