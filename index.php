@@ -28,7 +28,11 @@
 			}
 		}
 		else{ //Dessa är för de inloggade!
-
+		$sqlPrice = "SELECT Cost FROM Inventory WHERE ProductID = " . $_POST["prodId"] . "" ;
+		$PriceResult = $conn->query($sqlPrice);
+		if($Prow = $PriceResult->fetch_assoc()){
+			$prodPrice = $Prow["Cost"];
+		}
 			$sql = "SELECT OrderID FROM Orders WHERE AccountID =" . $_SESSION['accID'] . " AND OrderDate IS NULL"; //Nu skapas en ny order istället för att den gammla ersätts
 			$result = $conn->query($sql);
 
@@ -50,7 +54,7 @@
 						}
 						else{	//Detta sker om det inte ligger en vara med samma productID i varukorgen!
 
-							$sql = "INSERT INTO ShoppingCart (OrderID, ProductID, Quantity)VALUES('" . $row["OrderID"] . "','" . $_POST["prodId"]."','" . $_POST["quantity"]."')";
+							$sql = "INSERT INTO ShoppingCart (OrderID, ProductID, Quantity, ProductPrice)VALUES('" . $row["OrderID"] . "','" . $_POST["prodId"]."','" . $_POST["quantity"]."','".$prodPrice. "')";
 							$result = $conn->query($sql);
 							$_SESSION['orderId'] = $row["OrderID"];
 							echo "Din shoppincart är updaterad";

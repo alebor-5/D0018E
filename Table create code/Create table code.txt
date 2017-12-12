@@ -1,0 +1,76 @@
+CREATE TABLE Account (
+    AccountID int UNSIGNED NOT NULL AUTO_INCREMENT,
+    FirstName varchar(255) NOT NULL,
+    LastName varchar(255) NOT NULL,
+    Username varchar(255) NOT NULL,
+    Pwd varchar(255) NOT NULL,
+    Address varchar(255) NOT NULL,
+    ZipCode varchar(255) NOT NULL,
+    Email varchar(255) NOT NULL,
+    Admin tinyint(1) NOT NULL,
+    PRIMARY KEY (AccountID)
+);
+
+INSERT INTO `Account`(`FirstName`, `LastName`, `Username`, `Pwd`, `Address`, `ZipCode`, `Email`, `Admin`) VALUES ('Admin','Adminsson','admin','$2y$10$AGQ60PDO1yjVGqEyZI49ROYtsFkpe5RuQo0NpbkmVDPxCyxSG5QTC','admingatan3','26754','admin@mail.com','1');
+
+CREATE TABLE Inventory (
+    ProductID int NOT NULL AUTO_INCREMENT,
+    Name varchar(255) NOT NULL,
+    Quantity int UNSIGNED NOT NULL,
+    Height int NOT NULL,
+    Weight int NOT NULL,
+    Cost int NOT NULL,
+    Description TEXT,
+          URL varchar(512),
+    PRIMARY KEY (ProductID)
+);
+
+CREATE TABLE Orders (
+    OrderID int NOT NULL AUTO_INCREMENT,
+    AccountID int unsigned,
+    FirstName varchar(255),
+    LastName varchar(255),
+    Email varchar(255),
+    Address varchar(255),
+    ZipCode varchar(255),
+    OrderDate datetime,
+    ShippedDate datetime,
+    FOREIGN KEY (AccountID) REFERENCES account(AccountID),
+    PRIMARY KEY(OrderID)
+);
+
+CREATE TABLE ShoppingCart(
+    OrderID int NOT NULL,
+    ProductID int NOT NULL,
+    Quantity int NOT NULL,
+    ProductPrice int NOT NULL,
+    FOREIGN KEY (OrderID) REFERENCES orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES inventory(ProductID),
+    PRIMARY KEY (OrderID, ProductID)
+    );
+
+CREATE TABLE Comments(
+    CommentID INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    Review TEXT,
+    Rating int,
+    ProductID int NOT NULL,
+    AccountID int UNSIGNED NOT NULL,
+    ResponseID INT UNSIGNED,
+    FOREIGN KEY (ResponseID) REFERENCES Comments(CommentID),
+    FOREIGN KEY (ProductID) REFERENCES Inventory(ProductID),
+    FOREIGN KEY (AccountID) REFERENCES Account(AccountID),
+    PRIMARY KEY (CommentID)
+    );
+
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description, URL) VALUES('Capella', '50', '124', '4', '4999', 'Capella 岠en ny typ av arbetsstol. Skapad f򲠡tt f塤in kropp i r򲥬se. Att sitta r嵴 handlar n宬igen om att r򲡠p塳ig. K峮an i Capella 岠den nyutvecklade innovativa FreeMotion-mekanismen. Den ger v孢alanserade mikror򲥬ser i sitsen och ett aktivt sittande. Allt f򲠡tt du ska m塢ra.','http://www.kinnarps.com/Images/Products/DeskChairs/Capella/slider/2_KP11-000556A_HR.jpg?width=1000');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('Plus[8]', '20', '128', '3', '7499', 'N岠r򲥬se m򴥲 stillhet. Sitt ned. Men sitt inte still. Den h򧰲esterande stolen Plus [8] 岠lika v孢alanserad som tidl򳴠elegant. Dess flexibilitet och stabilitet kommer att h歬a dig i r򲥬se och i fokus.','http://www10.kinnarps.com/Images/Products/DeskChairs/Highres/8780N78.jpg?width=800');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('Corsair T1', '10', '129', '4', '2499', 'Corsair T1 RACE 岠framtagen med inspiration fr殠racing och kombinerar komfort med material av h򧳴a kvalitet. Allt f򲠥n professionell spelupplevelse.','https://inetimg3.se/img/688x386/6334327_2.jpg');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('DXRacer DRIFTING', '2', '104', '3', '2990', 'Gamingstolarna i den h岠serien ger en exceptionell niv塡v komfort. De har mer stoppning i rygg och sittdyna, 岠lite mer sk歡de i j宦򲥬se med F-serien och har en lite djupare sits.','https://inetimg3.se/img/688x386/6600183_0.jpg');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('DXRacer KING', '1', '110', '5', '3990', 'DXRacers King-serie inneh歬er rymliga stolar med h򧠫omfort. Denna serie 岠skapad med tankarna p塦unktionalitet och storlek. De multifunktionella armst򤥮 och den l洢ara tilt-mekansimen till浥r dig att anpassa stolen efter dina specifika behov.','https://inetimg3.se/img/688x386/6600180_0.jpg');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('Noblechairs EPIC Faux', '11', '120', '4', '3690', 'Noblechairs EPIC serie 岠en stol i h򧠫valitet med kl女el i PU konstl奥r i h򧳴a kvalitet. L奥rimitation utstr歡r en tilltalande lyster medan sidorna 岠vackert inramat med en svart remsa av velour l奥r med imitation av mocka. Sitt och ryggst򤠴夫s av broderade diamantformade m򮳴er som bidrar till optimal luftning.','https://inetimg2.se/img/688x386/6600325_4.jpg');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('Noblechairs EPIC Real Leather', '24', '110', '4', '5990', 'Noblechairs EPIC serie 岠en stol i h򧠫valitet med kl女el i 嬴a l奥r i h򧳴a kvalitet. ūta l奥r 岠slitstarkt, l嵴 att reng򲡬 UV-best寤ig, ok寳lig f򲠦ukt samt 此rande och temperaturt歩g. Sitt och ryggst򤠴夫s av broderade diamantformade m򮳴er som bidrar till optimal luftning.','https://inetimg3.se/img/688x386/6608238_0.jpg');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('Taurus Gamingstol', '54', '115', '4', '2499', 'Taurus Gamingstol 岠en racinginspirerad gamingstol med h򧠫omfort och 寮u h򧲥 kvalitet. Med det patenterade Taurus-utseendet 岠detta en stol som passar vid var gamers rigg, med ett l嵴sk򴴠och h򧫶alitativt PU-l奥r med sydda s򭭡r och logotyper.','https://inetimg3.se/img/688x386/6600205_11.jpg');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('9000', '10', '119', '3', '6999', 'Fr殠Kinnarps hemsida: Vi skapade 9000 med din rygg som mall och den senaste tekniken som verktyg. Slutresultatet? En stol som erbjuder maximal flexibilitet.','https://www.kinnarps.se/contentassets/c2798a4c007f433d8c0e8c28ec6c95ee/images/93342.jpg?preset=product-imageLg1x');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('AKRACING ProX', '5', '120', '4', '3795', 'ProX serien har en distinkt och sofistikerad design sammansatt med smakfulla f峧er som 岠perfekt f򲠤en mogna gamern som letar efter en stol med o򶥲tr姦ad kvalitetsk寳la.','https://www.komplett.se/img/p/1200/c7a3379e-2987-6c47-31cb-92e7cf6afd42.jpg');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('AKRACING Overture', '10', '125', '5', '2.795', 'Varje ouvertyr 岠en ny b򲪡n, ljud och substans som v幥r fram ur tystnaden. Detta 岠inspirationen bakom AKRacings nya Overture gaming-stol.','https://www.komplett.se/img/p/1200/1aae4c49-80ce-2b63-e673-6185a4a2a167.jpg');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('AKRACING Octane', '7', '115', '4', '2990', 'Den nya Octane-serien 岠en fantastiskt snygg ny stol med h򧫶alitativt PU-l奥r och en stripe-design som ger ett cool utseende. Octane-serien har 工n armst򤠭ed ny form f򲠤nnu mer komfort n岠du sitter i den.','https://www.komplett.se/img/p/1200/0993488f-fc57-dec1-18c9-31b804212af9.jpg');

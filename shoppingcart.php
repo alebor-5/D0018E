@@ -83,7 +83,7 @@ if(!isset($_SESSION['user'])){ //Detta är för icke inloggade användare!
 
 if(isset($_SESSION['user']) && isset($_SESSION['orderId'])){
 
-	$sql = "SELECT ShoppingCart.ProductID, Inventory.name, Inventory.URL, ShoppingCart.Quantity, Inventory.Cost FROM ShoppingCart INNER JOIN Inventory ON ShoppingCart.productID = Inventory.productID WHERE OrderID =" . $_SESSION['orderId'] . "";
+	$sql = "SELECT ShoppingCart.ProductID, Inventory.name, Inventory.URL, ShoppingCart.Quantity, ShoppingCart.ProductPrice FROM ShoppingCart INNER JOIN Inventory ON ShoppingCart.productID = Inventory.productID WHERE OrderID =" . $_SESSION['orderId'] . "";
 	$result = $conn->query($sql);
 
 	if ($result->num_rows > 0) {
@@ -93,7 +93,7 @@ if(isset($_SESSION['user']) && isset($_SESSION['orderId'])){
 
 			$filename = $row["URL"];
 
-			$summa = $summa + $row["Cost"] * $row["Quantity"];
+			$summa = $summa + $row["ProductPrice"] * $row["Quantity"];
 			$totalquantity += $row["Quantity"];
 
 
@@ -101,7 +101,7 @@ if(isset($_SESSION['user']) && isset($_SESSION['orderId'])){
 
 echo "<div class='cart-placer'><a class='linktoprod' href='product.php?prodId=" . $row['ProductID'] . "'><img src='" . $filename . "' class='smallpic' /> <div class='cartName'>" . $row["name"]. "</a></div>";
 			echo	"<form action='shoppingcart.php' method='get'><input type='hidden' name='removeUser' value=" . $row["ProductID"] . " ><input type='submit' value='' /></form>
-			<div class='cartCost'>  " . $row["Cost"]. " kr </div><div class='cartQuant'> " . $row["Quantity"]. "st</div>
+			<div class='cartCost'>  " . $row["ProductPrice"]. " kr </div><div class='cartQuant'> " . $row["Quantity"]. "st</div>
 			</div>";
 			 //OBS OBS, form validation på serversidan måste ske här
 
