@@ -35,7 +35,7 @@ CREATE TABLE Orders (
     ZipCode varchar(255),
     OrderDate datetime,
     ShippedDate datetime,
-    FOREIGN KEY (AccountID) REFERENCES account(AccountID),
+    FOREIGN KEY (AccountID) REFERENCES Account(AccountID),
     PRIMARY KEY(OrderID)
 );
 
@@ -44,8 +44,8 @@ CREATE TABLE ShoppingCart(
     ProductID int NOT NULL,
     Quantity int NOT NULL,
     ProductPrice int NOT NULL,
-    FOREIGN KEY (OrderID) REFERENCES orders(OrderID),
-    FOREIGN KEY (ProductID) REFERENCES inventory(ProductID),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Inventory(ProductID),
     PRIMARY KEY (OrderID, ProductID)
     );
 

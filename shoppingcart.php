@@ -31,7 +31,7 @@
 
 		$sql = "DELETE FROM ShoppingCart WHERE ProductID=" . $_GET["removeUser"]  . "";
 		if ($conn->query($sql) === TRUE) {
-			echo "Varan har tagits bort från din varukorg!";
+			
 		}
 		else {
 			echo "Något gick snett: " . $conn->error;
@@ -81,11 +81,11 @@ if(!isset($_SESSION['user'])){ //Detta är för icke inloggade användare!
 	}
 }
 
-if(isset($_SESSION['user']) && isset($_SESSION['orderId'])){
+if(isset($_SESSION['user']) && isset($_SESSION['orderId'])){		//För inloggade
 
 	$sql = "SELECT ShoppingCart.ProductID, Inventory.name, Inventory.URL, ShoppingCart.Quantity, ShoppingCart.ProductPrice FROM ShoppingCart INNER JOIN Inventory ON ShoppingCart.productID = Inventory.productID WHERE OrderID =" . $_SESSION['orderId'] . "";
 	$result = $conn->query($sql);
-
+	$_SESSION['userQuant'] = 0;
 	if ($result->num_rows > 0) {
 		// output data of each row
 
@@ -109,8 +109,8 @@ echo "<div class='cart-placer'><a class='linktoprod' href='product.php?prodId=" 
 
 	} else {
 		echo "Det finns inga produkter i din varukorg";
-}
-
+	}
+	$_SESSION['userQuant'] = $totalquantity;
 }
 
 

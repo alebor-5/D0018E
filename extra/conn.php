@@ -139,7 +139,32 @@ function reviewRating($rating){
   }
 }
 
-
+function getCartQuant(){
+	global $conn;
+	if(!isset($_SESSION['user']) && isset($_SESSION['prodIDs'])){ //För icke inloggade
+	$quantity = 0;
+		foreach($_SESSION['prodIDs'] as $tempId => $quant){
+			$quantity += $quant;
+		}
+		echo "<div id='circle'><span id='cartAmount'>" . $quantity . "</span></div>";
+	}
+	else if(isset($_SESSION['user']) && isset($_SESSION['orderId'])){ //För inloggade
+		if(isset($_SESSION['userQuant'])){		
+			echo "<div id='circle'><span id='cartAmount'>" . $_SESSION['userQuant'] . "</span></div>";
+		}
+		else{
+			$_SESSION['userQuant'] = 0;
+			$sql = "SELECT Quantity FROM ShoppingCart WHERE OrderID = '" . $_SESSION['orderId'] . "'";
+			$result = $conn->query($sql);
+			if ($result->num_rows > 0) {
+				while($row = $result->fetch_assoc()) {
+					$_SESSION['userQuant'] += $row["Quantity"];
+				}
+			}
+			echo "<div id='circle'><span id='cartAmount'>" . $_SESSION['userQuant'] . "</span></div>";
+			}
+	}
+}
 
 
 

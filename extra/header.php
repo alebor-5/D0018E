@@ -6,6 +6,8 @@
 		 $_SESSION['prodIDs']= array();
 		 
 	}
+	
+
 ?>
 
 
@@ -53,6 +55,13 @@
 		
 		
 		
-		<a href="shoppingcart.php"><img src="img/kundvagn.png" alt="Kundvagn" id="temp" /></a>
+		<a href="shoppingcart.php"><img src="img/kundvagn.png" alt="Kundvagn" id="temp" />
+		<?php
+		
+		if(function_exists('getCartQuant')){ 
+			getCartQuant(); 
+		}
+		?>
+		</a>
 	</div>
 </div>

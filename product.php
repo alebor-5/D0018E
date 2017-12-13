@@ -108,6 +108,7 @@
 					echo "En orderID har skapats för användaren samt att produkten lagts till";
 				}
 		}
+		header("Location: product.php?prodId=" . $_GET['prodId'] . "");
 	}
 //Slut på varukorg insert
 
@@ -279,6 +280,13 @@
 
 
 $(document).ready(function(){
+	
+
+	$('.top-notify').delay(1000).fadeOut('slow');
+
+
+
+
     $(".FadeComments").click(function(){
 		var id = this.getAttribute( 'id' );
 		var TempText = $("#" + id).text();

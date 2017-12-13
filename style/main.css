@@ -666,4 +666,29 @@ tr.animate td{
 	
 }
 
+.top-notify{
+	margin:0px auto;
+	position:fixed;
+	top:0px;
+	width:1100px;
+	
+	height:100px;
+	background-color:#0f0;
+	
+}
+#circle{
+	position:absolute;
+	margin-top:10px;
+	margin-left:25px;
+	border-radius:50%;
+	text-align:center;
+	width:20px;
+	height:20px;
+	overflow:hidden;
+	background:#f00;
+}
+#cartAmount{
+
+	
+}
 /* Slut på mypage */

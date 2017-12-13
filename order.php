@@ -247,6 +247,7 @@ else{//ej konto
 								$_SESSION['orderId'] = $row["OrderID"];
 							}
 						}
+						$_SESSION['userQuant'] = 0;
 					}
 					else {
 						echo "Error: varukorgen tömdes ej " . $conn->error;
