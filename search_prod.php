@@ -15,7 +15,7 @@ if(isset($_GET["Search"])){
 
 			echo "<div class='main-placer'><a class='linktoprod' href='product.php?prodId=" . $row['ProductID'] . "'><img src='" . $filename . "' class='smallpic' /> <div class='indexName'>" . $row["name"]. "</div><div class='indexCost'>" . $row["Cost"]. " kr </div> <div class='indexQuantity'>" . $row["Quantity"]. "st</div>
 			<div class='indexRating'>".writeRating($row['ProductID'])."</div>	</a>
-			<div class='indexForm'><form action='index.php' method='get'>
+			<div class='indexForm'><form action='index.php' method='post'>
 			<input id='quantity' name='quantity' type='number' value='1' min='1' max='".  $row["Quantity"] ."' />
 			<input id='prodId' name='prodId' type='hidden' value=" . $row["ProductID"]. ">
 

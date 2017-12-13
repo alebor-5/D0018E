@@ -11,9 +11,7 @@
 	--><div class="menuBox">
 		<a href="adminmodify.php"><span class="menuClose">Modifiera produkter</span></a>
 	</div><!--
-	--><div class="menuBox">
-		<a href="admindelete.php"><span class="menuClose">Ta bort produkter</span></a>
-	</div><!--
+
 	--><div class="menuBox">
 		<a href="checkorders.php"><span class="menuClose">Beställda ordrar</span></a>
 	</div><!--
