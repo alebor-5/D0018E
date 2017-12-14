@@ -13,6 +13,8 @@ $zip = $zip2 = "";
 $ordered = False;
 $errPrint = "";
 
+$invCost;
+
 if(isset($_SESSION['user'])) {		//För inloggade
 	if(isset($_GET['account'])) {
 		$ordered = True;
@@ -71,8 +73,65 @@ else{//ej konto
 	}
 }
 ?>
-
 <div id="body-wr" style="text-align: center">
+<?php
+$summa = 0;
+$totalquantity = 0;
+
+if(!isset($_SESSION['user'])){ //Detta är för icke inloggade användare!
+	if(isset($_SESSION['prodIDs'])){
+
+		if(empty($_SESSION['prodIDs'])){	//sker när icke-inloggad användare är i korgen men den är tom. Om inget echo sker så blir det en ful glipa
+			echo "Det finns inga produkter i din varukorg";
+		}
+		else{
+			echo "Din beställning";	//Måste ha den, annars blir det glipa.. vet ej varför
+		}
+		
+		foreach($_SESSION['prodIDs'] as $tempId => $quant){
+
+
+			$sql = "SELECT Cost FROM Inventory WHERE ProductID=" . $tempId  . "";
+			$result = $conn->query($sql);
+
+			while($row = $result->fetch_assoc()) {
+				$invCost[$tempId] = $row["Cost"];	//Sparar det nuvarande priset
+				$summa += $quant * $row["Cost"];
+				$totalquantity += $quant;
+			}
+		}
+	}
+	else{
+		echo "Det finns inga produkter i din varukorg";
+	}
+}
+
+if(isset($_SESSION['user']) && isset($_SESSION['orderId'])){		//För inloggade
+
+	$sql = "SELECT ShoppingCart.ProductID, Inventory.name, Inventory.URL, ShoppingCart.Quantity, Inventory.Cost FROM ShoppingCart INNER JOIN Inventory ON ShoppingCart.productID = Inventory.productID WHERE OrderID =" . $_SESSION['orderId'] . "";
+	$result = $conn->query($sql);
+	$_SESSION['userQuant'] = 0;
+	if ($result->num_rows > 0) {
+		echo "Din beställning";
+
+		while($row = $result->fetch_assoc()) {
+			$invCost[$row["ProductID"]] = $row["Cost"];		//Sparar undan det nuvarande priset för varje produkt
+			$summa = $summa + $row["Cost"] * $row["Quantity"];
+			$totalquantity += $row["Quantity"];
+		}
+	}else {
+		echo "Det finns inga produkter i din varukorg";
+	}
+	$_SESSION['userQuant'] = $totalquantity;
+}
+?>
+	<div id='cartsummary'>
+		<p style="text-align:right;margin-right:100px;">Antal:<b> <?php echo $totalquantity; ?> st</b></p>
+		<p style="text-align:right;margin-right:100px;">Summa:<b> <?php echo $summa; ?> kr</b></p>
+	</div>
+
+
+<!--<div id="body-wr" style="text-align: center">-->
 	<form action="extra/orderProcess.php" method="POST">
 		<input type="text" name="firstName" placeholder="Förnamn" value="<?php echo $fname2; ?>">
 		<span style="color:red; position:absolute;"> <?php echo $fname; ?></span><br>
@@ -91,10 +150,10 @@ else{//ej konto
 
 		<?php
 			if(isset($_SESSION['user'])) {
-				echo '<input type="submit" name="account" value="Beställ">';
+				echo '<input type="submit" name="account" value="Beställ" style="display:inline-block">';
 			}
 			else{
-				echo '<input type="submit" name="guest" value="Beställ">';
+				echo '<input type="submit" name="guest" value="Beställ" style="display:inline-block">';
 			}
 		?>
 	</form>
@@ -159,6 +218,11 @@ else{//ej konto
 						$conn->query("ROLLBACK");
 					}
 					
+					foreach($invCost as $tempId => $cost){	//Sätter priset för produkten vid beställningen					
+						$sql = "UPDATE ShoppingCart SET ProductPrice = " . $cost . "  WHERE productID = " . $tempId . " AND OrderID = " . $_SESSION['orderId'] . "";
+						$result = $conn->query($sql);										
+					}
+					
 					//Slut på det -------------------------------------------------------------------------------------
 				}
 				else{	//Inget i korgen för inloggad
@@ -205,8 +269,8 @@ else{//ej konto
 								foreach($_SESSION['prodIDs'] as $tempId => $quant){
 
 
-									$sql = "INSERT INTO ShoppingCart(OrderID,ProductID,Quantity)
-									VALUES ('".$tempOrderID."','".$tempId."','".$quant."')";
+									$sql = "INSERT INTO ShoppingCart(OrderID,ProductID,Quantity,ProductPrice)
+									VALUES ('".$tempOrderID."','".$tempId."','".$quant."','".$invCost[$tempId]."')";
 									$result = $conn->query($sql);
 									//Slut på inläggning i ShoppingCart
 								
@@ -227,12 +291,12 @@ else{//ej konto
 				}
 			}
 			
-			if(strlen($errPrint) > 0){								
+			if(strlen($errPrint) > 0){
 				echo '<div class="errAlert">
 					Ett fel har uppstått med beställningen<br>
 					' . $errPrint . '<br>
 					<a href="shoppingcart.php"><span class="closebtn">Tillbaks Till Varukorgen</span></a>
-				</div>';					
+				</div>';				
 			}
 			else{
 				//Tömmer varukorg
@@ -264,7 +328,7 @@ else{//ej konto
 					<a href="index.php"><span class="closebtn">Tillbaks Till Startsidan</span></a>
 				</div>';
 			}
-				
+			//echo "</form>";				
 		}
 	?>
 </div>
