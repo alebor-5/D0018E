@@ -2,11 +2,11 @@
 	include_once 'extra/conn.php';
 	include_once 'extra/header.php';
 	include_once 'extra/admincheck.php';
-	
-	
-	
 
-	
+
+
+
+
 ?>
 <div id="body-wr">
 
@@ -16,7 +16,7 @@
 		$email = "";
 		$address = "";
 		$zipcode = "";
-		
+
 		if($_GET["isUser"] == false){
 			$sql = "SELECT FirstName, LastName, Email, Address, ZipCode FROM Orders WHERE OrderID=" . $_GET["ordId"] ."";
 			$result = $conn->query($sql);
@@ -42,7 +42,7 @@
 				}
 			}
 		}
-		
+
 			echo "<div class='adminOrderPlace'>
 				<table>
 					<tr>
@@ -58,7 +58,7 @@
 						<td>". $zipcode . "</td>
 					</tr>
 				</table>
-				
+
 
 				</div>";
 	}
@@ -76,7 +76,7 @@
 		</tr>
 	<?php
 		$conn->query("SET NAMES utf8");		//Denna behövs för att få åäö korrekt!
-		$sql = "SELECT ProductID, Quantity FROM ShoppingCart WHERE OrderID=" . $_GET["ordId"] ."";
+		$sql = "SELECT ProductID, Quantity FROM OrderItems WHERE OrderID=" . $_GET["ordId"] ."";
 		$result = $conn->query($sql);
 		while($row = $result->fetch_assoc()){
 			echo "
@@ -84,9 +84,9 @@
 				<td> " . $row["ProductID"] . " </td>
 				<td> " . $row["Quantity"] . " </td>
 			</tr>";
-			
+
 		}
-	
+
 	?>
 	</table>
 	<form action="checkorders.php" method="post">

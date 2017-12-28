@@ -16,7 +16,7 @@
 	error_reporting(E_ALL);
 	ini_set('display_errors',1);
 
-	//Följande är för att lägg in i shoppingcart,  
+	//Följande är för att lägg in i OrderItems,
 	if (isset($_POST["prodId"]) && isset($_POST["quantity"]) ){
 		if(!isset($_SESSION['user'])){
 			if(!isset($_SESSION['prodIDs'][$_POST["prodId"]])){		//dessa if else satserna är för icke inloggade!!!
@@ -35,13 +35,13 @@
 					if($row = $result->fetch_assoc()) {
 						$_SESSION['orderId'] = $row["OrderID"];
 
-						$sql = "SELECT productID FROM ShoppingCart WHERE OrderID = " . $_SESSION['orderId'] . " AND ProductID = " . $_POST["prodId"] . "";
+						$sql = "SELECT productID FROM OrderItems WHERE OrderID = " . $_SESSION['orderId'] . " AND ProductID = " . $_POST["prodId"] . "";
 						$result = $conn->query($sql);
 
 						if($result->num_rows > 0){	//Detta är om det redan finns en produktID tillhörande den användaren i databasen
 							if($row = $result->fetch_assoc()) {
 
-								$sql = "UPDATE ShoppingCart SET Quantity = Quantity + " . $_POST["quantity"] . "  WHERE productID = " . $_POST["prodId"] . " AND orderID=" . $_SESSION['orderId'] . "" ;
+								$sql = "UPDATE OrderItems SET Quantity = Quantity + " . $_POST["quantity"] . "  WHERE productID = " . $_POST["prodId"] . " AND orderID=" . $_SESSION['orderId'] . "" ;
 
 								$result = $conn->query($sql);
 								echo "Din varukorg hard updaterats!";
@@ -49,8 +49,8 @@
 							}
 						}
 						else{	//Detta sker om det inte ligger en vara med samma productID i varukorgen!
-							
-							$sql = "INSERT INTO ShoppingCart (OrderID, ProductID, Quantity)VALUES('" . $row["OrderID"] . "','" . $_POST["prodId"]."','" . $_POST["quantity"]."')";
+
+							$sql = "INSERT INTO OrderItems (OrderID, ProductID, Quantity)VALUES('" . $row["OrderID"] . "','" . $_POST["prodId"]."','" . $_POST["quantity"]."')";
 							$result = $conn->query($sql);
 							$_SESSION['userQuant'] += $_POST["quantity"];
 							$_SESSION['orderId'] = $row["OrderID"];
@@ -66,7 +66,7 @@
 					$result = $conn->query($sql);
 					if($result->num_rows > 0){			//Detta är om det redan finns en order tillhörande den användaren i databasen
 						if($row = $result->fetch_assoc()) {
-							$sql = "INSERT INTO ShoppingCart (OrderID, ProductID, Quantity)VALUES('" . $row["OrderID"] . "','" . $_POST["prodId"]."','" . $_POST["quantity"]."')";
+							$sql = "INSERT INTO OrderItems (OrderID, ProductID, Quantity)VALUES('" . $row["OrderID"] . "','" . $_POST["prodId"]."','" . $_POST["quantity"]."')";
 							$_SESSION['orderId'] = $row["OrderID"];
 							$result = $conn->query($sql);
 						}
@@ -78,7 +78,7 @@
 		}
 		header("Location: index.php");
 	}
-	//Slut på shoppingcart
+	//Slut på OrderItems
 
 $sql = "SELECT ProductID, name, Quantity, Cost, URL FROM Inventory WHERE Quantity != 0";
 $result = $conn->query($sql);

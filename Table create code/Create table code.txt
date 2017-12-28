@@ -1,3 +1,33 @@
+
+Skip to content
+This repository
+
+    Pull requests
+    Issues
+    Marketplace
+    Explore
+
+    @alebor-5
+
+1
+0
+
+    0
+
+alebor-5/D0018E
+Code
+Issues 0
+Pull requests 0
+Projects 0
+Wiki
+Insights
+Settings
+D0018E/Table create code/Create table code.txt
+37766c6 14 days ago
+@fandig2 fandig2 Sista commiten
+@alebor-5
+@fandig2
+85 lines (77 sloc) 7.14 KB
 CREATE TABLE Account (
     AccountID int UNSIGNED NOT NULL AUTO_INCREMENT,
     FirstName varchar(255) NOT NULL,
@@ -39,7 +69,7 @@ CREATE TABLE Orders (
     PRIMARY KEY(OrderID)
 );
 
-CREATE TABLE OrderItemsCart(
+CREATE TABLE OrderItems(
     OrderID int NOT NULL,
     ProductID int NOT NULL,
     Quantity int NOT NULL,
@@ -71,15 +101,29 @@ CREATE TABLE CommentResponses(
 
 );
 
-INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description, URL) VALUES('Capella', '50', '124', '4', '4999', 'Capella �r en ny typ av arbetsstol. Skapad f�r att f� din kropp i r�relse. Att sitta r�tt handlar n�mligen om att r�ra p� sig. K�rnan i Capella �r den nyutvecklade innovativa FreeMotion-mekanismen. Den ger v�lbalanserade mikror�relser i sitsen och ett aktivt sittande. Allt f�r att du ska m� bra.','http://www.kinnarps.com/Images/Products/DeskChairs/Capella/slider/2_KP11-000556A_HR.jpg?width=1000');
-INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('Plus[8]', '20', '128', '3', '7499', 'N�r r�relse m�ter stillhet. Sitt ned. Men sitt inte still. Den h�gpresterande stolen Plus [8] �r lika v�lbalanserad som tidl�st elegant. Dess flexibilitet och stabilitet kommer att h�lla dig i r�relse och i fokus.','http://www10.kinnarps.com/Images/Products/DeskChairs/Highres/8780N78.jpg?width=800');
-INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('Corsair T1', '10', '129', '4', '2499', 'Corsair T1 RACE �r framtagen med inspiration fr�n racing och kombinerar komfort med material av h�gsta kvalitet. Allt f�r en professionell spelupplevelse.','https://inetimg3.se/img/688x386/6334327_2.jpg');
-INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('DXRacer DRIFTING', '2', '104', '3', '2990', 'Gamingstolarna i den h�r serien ger en exceptionell niv� av komfort. De har mer stoppning i rygg och sittdyna, �r lite mer sk�lade i j�mf�relse med F-serien och har en lite djupare sits.','https://inetimg3.se/img/688x386/6600183_0.jpg');
-INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('DXRacer KING', '1', '110', '5', '3990', 'DXRacers King-serie inneh�ller rymliga stolar med h�g komfort. Denna serie �r skapad med tankarna p� funktionalitet och storlek. De multifunktionella armst�den och den l�sbara tilt-mekansimen till�ter dig att anpassa stolen efter dina specifika behov.','https://inetimg3.se/img/688x386/6600180_0.jpg');
-INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('Noblechairs EPIC Faux', '11', '120', '4', '3690', 'Noblechairs EPIC serie �r en stol i h�g kvalitet med kl�dsel i PU konstl�der i h�gsta kvalitet. L�derimitation utstr�lar en tilltalande lyster medan sidorna �r vackert inramat med en svart remsa av velour l�der med imitation av mocka. Sitt och ryggst�d t�cks av broderade diamantformade m�nster som bidrar till optimal luftning.','https://inetimg2.se/img/688x386/6600325_4.jpg');
-INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('Noblechairs EPIC Real Leather', '24', '110', '4', '5990', 'Noblechairs EPIC serie �r en stol i h�g kvalitet med kl�dsel i �kta l�der i h�gsta kvalitet. �kta l�der �r slitstarkt, l�tt att reng�ra, UV-best�ndig, ok�nslig f�r fukt samt �ldrande och temperaturt�lig. Sitt och ryggst�d t�cks av broderade diamantformade m�nster som bidrar till optimal luftning.','https://inetimg3.se/img/688x386/6608238_0.jpg');
-INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('Taurus Gamingstol', '54', '115', '4', '2499', 'Taurus Gamingstol �r en racinginspirerad gamingstol med h�g komfort och �nnu h�gre kvalitet. Med det patenterade Taurus-utseendet �r detta en stol som passar vid var gamers rigg, med ett l�ttsk�tt och h�gkvalitativt PU-l�der med sydda s�mmar och logotyper.','https://inetimg3.se/img/688x386/6600205_11.jpg');
-INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('9000', '10', '119', '3', '6999', 'Fr�n Kinnarps hemsida: Vi skapade 9000 med din rygg som mall och den senaste tekniken som verktyg. Slutresultatet? En stol som erbjuder maximal flexibilitet.','https://www.kinnarps.se/contentassets/c2798a4c007f433d8c0e8c28ec6c95ee/images/93342.jpg?preset=product-imageLg1x');
-INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('AKRACING ProX', '5', '120', '4', '3795', 'ProX serien har en distinkt och sofistikerad design sammansatt med smakfulla f�rger som �r perfekt f�r den mogna gamern som letar efter en stol med o�vertr�ffad kvalitetsk�nsla.','https://www.komplett.se/img/p/1200/c7a3379e-2987-6c47-31cb-92e7cf6afd42.jpg');
-INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('AKRACING Overture', '10', '125', '5', '2.795', 'Varje ouvertyr �r en ny b�rjan, ljud och substans som v�xer fram ur tystnaden. Detta �r inspirationen bakom AKRacings nya Overture gaming-stol.','https://www.komplett.se/img/p/1200/1aae4c49-80ce-2b63-e673-6185a4a2a167.jpg');
-INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('AKRACING Octane', '7', '115', '4', '2990', 'Den nya Octane-serien �r en fantastiskt snygg ny stol med h�gkvalitativt PU-l�der och en stripe-design som ger ett cool utseende. Octane-serien har �ven armst�d med ny form f�r �nnu mer komfort n�r du sitter i den.','https://www.komplett.se/img/p/1200/0993488f-fc57-dec1-18c9-31b804212af9.jpg');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description, URL) VALUES('Capella', '50', '124', '4', '4999', 'Capella är en ny typ av arbetsstol. Skapad för att få din kropp i rörelse. Att sitta rätt handlar nämligen om att röra på sig. Kärnan i Capella är den nyutvecklade innovativa FreeMotion-mekanismen. Den ger välbalanserade mikrorörelser i sitsen och ett aktivt sittande. Allt för att du ska må bra.','http://www.kinnarps.com/Images/Products/DeskChairs/Capella/slider/2_KP11-000556A_HR.jpg?width=1000');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('Plus[8]', '20', '128', '3', '7499', 'När rörelse möter stillhet. Sitt ned. Men sitt inte still. Den högpresterande stolen Plus [8] är lika välbalanserad som tidlöst elegant. Dess flexibilitet och stabilitet kommer att hålla dig i rörelse och i fokus.','http://www10.kinnarps.com/Images/Products/DeskChairs/Highres/8780N78.jpg?width=800');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('Corsair T1', '10', '129', '4', '2499', 'Corsair T1 RACE är framtagen med inspiration från racing och kombinerar komfort med material av högsta kvalitet. Allt för en professionell spelupplevelse.','https://inetimg3.se/img/688x386/6334327_2.jpg');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('DXRacer DRIFTING', '2', '104', '3', '2990', 'Gamingstolarna i den här serien ger en exceptionell nivå av komfort. De har mer stoppning i rygg och sittdyna, är lite mer skålade i jämförelse med F-serien och har en lite djupare sits.','https://inetimg3.se/img/688x386/6600183_0.jpg');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('DXRacer KING', '1', '110', '5', '3990', 'DXRacers King-serie innehåller rymliga stolar med hög komfort. Denna serie är skapad med tankarna på funktionalitet och storlek. De multifunktionella armstöden och den låsbara tilt-mekansimen tillåter dig att anpassa stolen efter dina specifika behov.','https://inetimg3.se/img/688x386/6600180_0.jpg');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('Noblechairs EPIC Faux', '11', '120', '4', '3690', 'Noblechairs EPIC serie är en stol i hög kvalitet med klädsel i PU konstläder i högsta kvalitet. Läderimitation utstrålar en tilltalande lyster medan sidorna är vackert inramat med en svart remsa av velour läder med imitation av mocka. Sitt och ryggstöd täcks av broderade diamantformade mönster som bidrar till optimal luftning.','https://inetimg2.se/img/688x386/6600325_4.jpg');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('Noblechairs EPIC Real Leather', '24', '110', '4', '5990', 'Noblechairs EPIC serie är en stol i hög kvalitet med klädsel i äkta läder i högsta kvalitet. Äkta läder är slitstarkt, lätt att rengöra, UV-beständig, okänslig för fukt samt åldrande och temperaturtålig. Sitt och ryggstöd täcks av broderade diamantformade mönster som bidrar till optimal luftning.','https://inetimg3.se/img/688x386/6608238_0.jpg');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('Taurus Gamingstol', '54', '115', '4', '2499', 'Taurus Gamingstol är en racinginspirerad gamingstol med hög komfort och ännu högre kvalitet. Med det patenterade Taurus-utseendet är detta en stol som passar vid var gamers rigg, med ett lättskött och högkvalitativt PU-läder med sydda sömmar och logotyper.','https://inetimg3.se/img/688x386/6600205_11.jpg');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('9000', '10', '119', '3', '6999', 'Från Kinnarps hemsida: Vi skapade 9000 med din rygg som mall och den senaste tekniken som verktyg. Slutresultatet? En stol som erbjuder maximal flexibilitet.','https://www.kinnarps.se/contentassets/c2798a4c007f433d8c0e8c28ec6c95ee/images/93342.jpg?preset=product-imageLg1x');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('AKRACING ProX', '5', '120', '4', '3795', 'ProX serien har en distinkt och sofistikerad design sammansatt med smakfulla färger som är perfekt för den mogna gamern som letar efter en stol med oöverträffad kvalitetskänsla.','https://www.komplett.se/img/p/1200/c7a3379e-2987-6c47-31cb-92e7cf6afd42.jpg');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('AKRACING Overture', '10', '125', '5', '2.795', 'Varje ouvertyr är en ny början, ljud och substans som växer fram ur tystnaden. Detta är inspirationen bakom AKRacings nya Overture gaming-stol.','https://www.komplett.se/img/p/1200/1aae4c49-80ce-2b63-e673-6185a4a2a167.jpg');
+INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('AKRACING Octane', '7', '115', '4', '2990', 'Den nya Octane-serien är en fantastiskt snygg ny stol med högkvalitativt PU-läder och en stripe-design som ger ett cool utseende. Octane-serien har även armstöd med ny form för ännu mer komfort när du sitter i den.','https://www.komplett.se/img/p/1200/0993488f-fc57-dec1-18c9-31b804212af9.jpg');
+
+    © 2017 GitHub, Inc.
+    Terms
+    Privacy
+    Security
+    Status
+    Help
+
+    Contact GitHub
+    API
+    Training
+    Shop
+    Blog
+    About
