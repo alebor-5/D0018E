@@ -1,33 +1,4 @@
 
-Skip to content
-This repository
-
-    Pull requests
-    Issues
-    Marketplace
-    Explore
-
-    @alebor-5
-
-1
-0
-
-    0
-
-alebor-5/D0018E
-Code
-Issues 0
-Pull requests 0
-Projects 0
-Wiki
-Insights
-Settings
-D0018E/Table create code/Create table code.txt
-37766c6 14 days ago
-@fandig2 fandig2 Sista commiten
-@alebor-5
-@fandig2
-85 lines (77 sloc) 7.14 KB
 CREATE TABLE Account (
     AccountID int UNSIGNED NOT NULL AUTO_INCREMENT,
     FirstName varchar(255) NOT NULL,
@@ -113,17 +84,3 @@ INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VA
 INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('AKRACING ProX', '5', '120', '4', '3795', 'ProX serien har en distinkt och sofistikerad design sammansatt med smakfulla färger som är perfekt för den mogna gamern som letar efter en stol med oöverträffad kvalitetskänsla.','https://www.komplett.se/img/p/1200/c7a3379e-2987-6c47-31cb-92e7cf6afd42.jpg');
 INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('AKRACING Overture', '10', '125', '5', '2.795', 'Varje ouvertyr är en ny början, ljud och substans som växer fram ur tystnaden. Detta är inspirationen bakom AKRacings nya Overture gaming-stol.','https://www.komplett.se/img/p/1200/1aae4c49-80ce-2b63-e673-6185a4a2a167.jpg');
 INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description,URL) VALUES('AKRACING Octane', '7', '115', '4', '2990', 'Den nya Octane-serien är en fantastiskt snygg ny stol med högkvalitativt PU-läder och en stripe-design som ger ett cool utseende. Octane-serien har även armstöd med ny form för ännu mer komfort när du sitter i den.','https://www.komplett.se/img/p/1200/0993488f-fc57-dec1-18c9-31b804212af9.jpg');
-
-    © 2017 GitHub, Inc.
-    Terms
-    Privacy
-    Security
-    Status
-    Help
-
-    Contact GitHub
-    API
-    Training
-    Shop
-    Blog
-    About
