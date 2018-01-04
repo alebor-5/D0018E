@@ -1,4 +1,3 @@
-
 CREATE TABLE Account (
     AccountID int UNSIGNED NOT NULL AUTO_INCREMENT,
     FirstName varchar(255) NOT NULL,
@@ -40,11 +39,11 @@ CREATE TABLE Orders (
     PRIMARY KEY(OrderID)
 );
 
-CREATE TABLE OrderItems(
+CREATE TABLE ShoppingCart(
     OrderID int NOT NULL,
     ProductID int NOT NULL,
     Quantity int NOT NULL,
-    ProductPrice int,
+    ProductPrice int NOT NULL,
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
     FOREIGN KEY (ProductID) REFERENCES Inventory(ProductID),
     PRIMARY KEY (OrderID, ProductID)
@@ -60,7 +59,7 @@ CREATE TABLE Comments(
     FOREIGN KEY (AccountID) REFERENCES Account(AccountID),
     PRIMARY KEY (CommentID)
     );
-
+	
 CREATE TABLE CommentResponses(
 	CommentID INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	Review TEXT,
@@ -69,7 +68,7 @@ CREATE TABLE CommentResponses(
 	FOREIGN KEY (AccountID) REFERENCES Account(AccountID),
 	FOREIGN KEY (ResponseID) REFERENCES Comments(CommentID),
 	PRIMARY KEY (CommentID)
-
+	
 );
 
 INSERT INTO Inventory( Name, Quantity, Height, Weight, Cost, Description, URL) VALUES('Capella', '50', '124', '4', '4999', 'Capella är en ny typ av arbetsstol. Skapad för att få din kropp i rörelse. Att sitta rätt handlar nämligen om att röra på sig. Kärnan i Capella är den nyutvecklade innovativa FreeMotion-mekanismen. Den ger välbalanserade mikrorörelser i sitsen och ett aktivt sittande. Allt för att du ska må bra.','http://www.kinnarps.com/Images/Products/DeskChairs/Capella/slider/2_KP11-000556A_HR.jpg?width=1000');

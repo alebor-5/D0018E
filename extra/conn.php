@@ -1,8 +1,8 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "alebor5db";
+$servername = "utbweb.its.ltu.se";
+$username = "antwah-5";
+$password = "hejsan123";
+$dbname = "antwah5db";
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 // Create connection
@@ -26,7 +26,7 @@ function getRating ($pID){
 
   while($row = $result->fetch_assoc()) {
 	if($row["Rating"] > 0){ //Endast ratings mellan 1-5 används för räkna medelvärde. Användare som inte lämna något rating har inte "ratat".
-		$counts++;
+		$counts++;  
 	}
 	$totalRating += $row["Rating"];
   }
@@ -41,7 +41,7 @@ function getRating ($pID){
 
 function writeRating($pID){
   global $conn;
-  $Rating = getRating($pID);
+  $Rating = getRating($pID); 
   switch ($Rating){
     case 1:
     return '<span id="star1s" class="fa fa-star checkedstar"></span>
@@ -148,7 +148,7 @@ function getCartQuant(){
 		echo "<div id='circle'><span id='cartAmount'>" . $quantity . "</span></div>";
 	}
 	else if(isset($_SESSION['user']) && isset($_SESSION['orderId'])){ //För inloggade
-		if(isset($_SESSION['userQuant'])){
+		if(isset($_SESSION['userQuant'])){		
 			echo "<div id='circle'><span id='cartAmount'>" . $_SESSION['userQuant'] . "</span></div>";
 		}
 		else{

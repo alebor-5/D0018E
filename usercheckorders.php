@@ -2,15 +2,15 @@
 	include_once 'extra/conn.php';
 	include_once 'extra/header.php';
 	include_once 'extra/usercheck.php';
-
+	
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <div id="body-wr">
 	<div class="userorderbox">
 		<h1>Aktiva odrar</h1>
 		<p>Här är ordrar som vi håller på att packa eller kontrollerar.</p>
-
-		<?php
+		
+		<?php 
 			$sql = "SELECT OrderID, OrderDate FROM Orders WHERE AccountID = '" . $_SESSION["accID"] . "' AND ShippedDate IS NULL AND OrderDate IS NOT NULL";
 			$result = $conn->query($sql);
 			if($result->num_rows > 0){
@@ -28,39 +28,39 @@
 								<td><b>" . $row["OrderID"] . "</b></td>
 								<td><b>" . $row["OrderDate"] . "</b></td>
 							</tr>";
-					$sql2 = "SELECT OrderItems.Quantity, Inventory.Name FROM OrderItems INNER JOIN Inventory ON OrderItems.ProductID = Inventory.ProductID WHERE OrderID = '" . $row["OrderID"] . "'";
+					$sql2 = "SELECT ShoppingCart.Quantity, Inventory.Name FROM ShoppingCart INNER JOIN Inventory ON ShoppingCart.ProductID = Inventory.ProductID WHERE OrderID = '" . $row["OrderID"] . "'";
 					$result2 = $conn->query($sql2);
 					if($result2->num_rows > 0){
 							echo "
 							<tr class='animate" . $row["OrderID"] . "' style='display:none; background-color:#ccc;'>
 								<th colspan='2'>Namn</th>
 								<th>Antal</th>
-							</tr>";
+							</tr>";						
 						while($row2 = $result2->fetch_assoc()){
 							echo "
 							<tr class='animate" . $row["OrderID"] . "' style='display:none; background-color:#ccc;'>
 								<td colspan='2'>" . $row2["Name"] . "</td>
 								<td>" . $row2["Quantity"] . "</td>
 							</tr>";
-
-
+								
+							
 						}
-
+						
 					}
-
-
+					
+					
 				}
 				echo "</table></div>";
 			}
 		?>
-
-
+		
+	
 	</div>
-
+	
 	<div class="userorderbox">
 		<h1>Gamla odrar odrar</h1>
 		<p>Här kan du se dina tidigare odrar hos oss.</p>
-	<?php
+	<?php 
 			$sql = "SELECT OrderID, OrderDate, ShippedDate FROM Orders WHERE AccountID = '" . $_SESSION["accID"] . "' AND ShippedDate IS NOT NULL AND OrderDate IS NOT NULL";
 			$result = $conn->query($sql);
 			if($result->num_rows > 0){
@@ -80,32 +80,32 @@
 								<th>" . $row["OrderDate"] . "</th>
 								<th>" . $row["ShippedDate"] . "</th>
 							</tr>";
-					$sql2 = "SELECT OrderItems.Quantity, Inventory.Name FROM OrderItems INNER JOIN Inventory ON OrderItems.ProductID = Inventory.ProductID WHERE OrderID = '" . $row["OrderID"] . "'";
+					$sql2 = "SELECT ShoppingCart.Quantity, Inventory.Name FROM ShoppingCart INNER JOIN Inventory ON ShoppingCart.ProductID = Inventory.ProductID WHERE OrderID = '" . $row["OrderID"] . "'";
 					$result2 = $conn->query($sql2);
 					if($result2->num_rows > 0){
 							echo "
 							<tr class='animate2" . $row["OrderID"] . "' style='display:none; background-color:#ccc;'>
 								<th colspan='2'>Namn</th>
 								<th colspan='2'>Antal</th>
-							</tr>";
+							</tr>";						
 						while($row2 = $result2->fetch_assoc()){
 							echo "
 							<tr class='animate2" . $row["OrderID"] . "' style='display:none; background-color:#ccc;'>
 								<td colspan='2'>" . $row2["Name"] . "</td>
 								<td colspan='2'>" . $row2["Quantity"] . "</td>
 							</tr>";
-
-
+								
+							
 						}
-
+						
 					}
-
-
+					
+					
 				}
 				echo "</table></div>";
 			}
 		?>
-
+		
 	</div>
 </div>
 <script>

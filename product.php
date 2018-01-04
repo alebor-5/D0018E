@@ -2,7 +2,7 @@
 	include_once 'extra/conn.php';
 	include_once 'extra/header.php';
 	header('Content-type: text/html; charset=utf-8');
-
+	
 	error_reporting(E_ALL);
 	ini_set('display_errors',1);
 ?>
@@ -24,7 +24,7 @@
 				else if(!isset($_SESSION["user"]) && isset($_POST["Comment"]) && isset($_POST["starRating"])){
 					echo "Vänligen logga in för att lägga en recension!";
 				}
-
+				
 		}
 		else{
 			echo "Du måste skriva något";
@@ -32,13 +32,13 @@
 		}
 
 	}
-
+	
 	if(isset($_POST["Comment"]) && !isset($_POST["starRating"]) && isset($_SESSION["user"]) && isset($_POST["ResponseID"])){
 			if(!empty($_POST["Comment"])){//Om review har ingen text så accepteras den inte
 			$conn->query("SET NAMES utf8");
 			$sql = "INSERT INTO CommentResponses (Review,AccountID, ResponseID) VALUES ('" . $_POST['Comment'] . "','" . $_SESSION["accID"] . "','" . $_POST["ResponseID"] . "')";
 			$result = $conn->query($sql);
-
+			
 			if($result){
 				header("Location: product.php?prodId=" . $_GET['prodId'] . "");
 			}
@@ -73,13 +73,13 @@
 					if($row = $result->fetch_assoc()) {
 						$_SESSION['orderId'] = $row["OrderID"];
 
-						$sql = "SELECT productID FROM OrderItems WHERE OrderID = " . $_SESSION['orderId'] . " AND ProductID = " . $_POST["prodId"] . "";
+						$sql = "SELECT productID FROM ShoppingCart WHERE OrderID = " . $_SESSION['orderId'] . " AND ProductID = " . $_POST["prodId"] . "";
 						$result = $conn->query($sql);
 
 						if($result->num_rows > 0){	//Detta är om det redan finns en produktID tillhörande den användaren i databasen
 							if($row = $result->fetch_assoc()) {
 
-								$sql = "UPDATE OrderItems SET Quantity = Quantity + " . $_POST["quantity"] . "  WHERE productID = " . $_POST["prodId"] . " AND orderID=" . $_SESSION['orderId'] . "" ;
+								$sql = "UPDATE ShoppingCart SET Quantity = Quantity + " . $_POST["quantity"] . "  WHERE productID = " . $_POST["prodId"] . " AND orderID=" . $_SESSION['orderId'] . "" ;
 
 								$result = $conn->query($sql);
 								echo "Din varukorg hard updaterats!";
@@ -88,7 +88,7 @@
 						}
 						else{	//Detta sker om det inte ligger en vara med samma productID i varukorgen!
 
-							$sql = "INSERT INTO OrderItems (OrderID, ProductID, Quantity, ProductPrice)VALUES('" . $row["OrderID"] . "','" . $_POST["prodId"]."','" . $_POST["quantity"]."','".$prodPrice. "')";
+							$sql = "INSERT INTO ShoppingCart (OrderID, ProductID, Quantity, ProductPrice)VALUES('" . $row["OrderID"] . "','" . $_POST["prodId"]."','" . $_POST["quantity"]."','".$prodPrice. "')";
 							$result = $conn->query($sql);
 							$_SESSION['orderId'] = $row["OrderID"];
 							$_SESSION['userQuant'] += $_POST["quantity"];
@@ -104,7 +104,7 @@
 					$result = $conn->query($sql);
 					if($result->num_rows > 0){			//Detta är om det redan finns en order tillhörande den användaren i databasen
 						if($row = $result->fetch_assoc()) {
-							$sql = "INSERT INTO OrderItems (OrderID, ProductID, Quantity, ProductPrice)VALUES('" . $row["OrderID"] . "','" . $_POST["prodId"]."','" . $_POST["quantity"]."','".$prodPrice. "')";
+							$sql = "INSERT INTO ShoppingCart (OrderID, ProductID, Quantity, ProductPrice)VALUES('" . $row["OrderID"] . "','" . $_POST["prodId"]."','" . $_POST["quantity"]."','".$prodPrice. "')";
 							$_SESSION['orderId'] = $row["OrderID"];
 							$result = $conn->query($sql);
 						}
@@ -136,8 +136,8 @@
 			<div class='buynowbox'>
 
 			<span> " . $row["Cost"] . " kr</span>
-			<div class='prating'>".writeRating($_GET["prodId"])."</div>
-
+			<div class='prating'>".writeRating($_GET["prodId"])."</div>			
+			
 			<form action='product.php?prodId=" . $_GET['prodId'] . "' method='post'>
 			<input id='quantity' name='quantity' type='hidden' value='1' />
 			<input id='prodId' name='prodId' type='hidden' value=" . $row["ProductID"]. ">
@@ -174,41 +174,41 @@
 
 	</div>
 
-
+	
 	<?php	//Detta laddar in kommentarerna
 		$firstTemp = True;
 		$numAns = "";
 		$lastRow = 0;
 		$counter = 1;
-
+		
 		if(isset($_GET["prodId"])){
 			$conn->query("SET NAMES utf8");		//Denna behövs för att få åäö korrekt!
 			$sql = "SELECT Comments.Review, Comments.CommentID, Account.Username FROM Comments INNER JOIN Account ON Comments.AccountID = Account.AccountID WHERE ProductID =" . $_GET["prodId"] . " AND Comments.Review IS NOT NULL" ;
 			$result = $conn->query($sql);
 			$lastRow = $result->num_rows;
-
+			
 			while($row = $result->fetch_assoc()) {
 				$sql2 = "SELECT Rating FROM Comments WHERE CommentID =" . $row["CommentID"] . " AND Rating IS NOT NULL" ;
 				$result2 = $conn->query($sql2);
-
+				
 				if($row2 = $result2->fetch_assoc()){
 					if($firstTemp && ($row["Review"] != " ")){
 						$sql3 = "SELECT CommentResponses.Review, Account.Username FROM CommentResponses INNER JOIN Account ON CommentResponses.AccountID = Account.AccountID WHERE ResponseID =" . $row["CommentID"] . "" ;
 						$result3 = $conn->query($sql3);
-
+						
 						echo "<div class='FirstReviewBox'><h2>" . $row["Username"]. "</h2><div class='ratingfix'>".reviewRating($row2["Rating"])."</div><p class='textcomment'>" . htmlspecialchars( $row["Review"]) . "</p>";
-						if($result3->num_rows > 0){
-							$numAns = "($result3->num_rows)";
+						if($result3->num_rows > 0){							
+							$numAns = "($result3->num_rows)";	
 							echo "<span class='FadeComments' id='fadeThisOut" . $row["CommentID"] . "'>Visa svar $numAns</span>";
-
+														
 							while($row3 = $result3->fetch_assoc()){
 								echo "<div class='answersToComments fadeThisOut" . $row["CommentID"] . "'  style='display:none;' >
 										<h4>". $row3["Username"] . "</h4>
 										<div class='innerAnswerToComments'>" . $row3["Review"] . "</div>
-									</div>";
-							}
+									</div>";							
+							}						
 						}
-
+											
 						echo "<div class='com-Wr'>
 						<div ><span class='answerbox' id='answerCommentBox"  . $row["CommentID"] . "'>Svara</span></div>
 						<div class='answerCommentBox" . $row["CommentID"] . "' style='display:none;'>
@@ -226,20 +226,20 @@
 					else if(($row["Review"] != " ")){
 						$sql3 = "SELECT CommentResponses.Review, Account.Username FROM CommentResponses INNER JOIN Account ON CommentResponses.AccountID = Account.AccountID WHERE ResponseID =" . $row["CommentID"] . "" ;
 						$result3 = $conn->query($sql3);
-
+						
 						echo "<div class='ReviewBox'><h2>" . $row["Username"]. "</h2><div class='ratingfix'>".reviewRating($row2["Rating"])."</div><p class='textcomment'>" . htmlspecialchars( $row["Review"]) . "</p>";
-						if($result3->num_rows > 0){
-							$numAns = "($result3->num_rows)";
+						if($result3->num_rows > 0){							
+							$numAns = "($result3->num_rows)";							
 							echo "<span class='FadeComments' id='fadeThisOut" . $row["CommentID"] . "'>Visa svar $numAns</span>";
-
+							
 							while($row3 = $result3->fetch_assoc()){
 								echo "<div class='answersToComments fadeThisOut" . $row["CommentID"] . "'  style='display:none;' >
 										<h4>". $row3["Username"] . "</h4>
 										<div class='innerAnswerToComments'>" . $row3["Review"] . "</div>
-									</div>";
-							}
+									</div>";							
+							}						
 						}
-
+						
 						if($lastRow == $counter){//Sista kommentaren som printas ut
 							echo "<div class='padder'>
 							<div ><span class='answerbox' id='answerCommentBox"  . $row["CommentID"] . "'>Svara</span></div>
@@ -267,15 +267,15 @@
 							</div>";
 							$counter++;
 						}
-
-
+						
+						
 					}
-				}
-			}
+				}			
+			}			
 		}
-
+	
 	?>
-
+	
 
 </div>
 
@@ -286,7 +286,7 @@
 
 
 $(document).ready(function(){
-
+	
 
 	$('.top-notify').delay(1000).fadeOut('slow');
 

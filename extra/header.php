@@ -6,6 +6,8 @@
 		 $_SESSION['prodIDs']= array();
 		 
 	}
+	
+
 ?>
 
 
@@ -37,7 +39,7 @@
 							<a href="mypage.php" >Min sida</a><br>
 							<a href="extra/logout.php" >Logga ut</a>';
 						}elseif($_SESSION['user'] == 1){
-							echo '<a href="admin.php" >Admin</a><br>
+							echo '<a href="admin.php" >AdminGrejer</a><br>
 							<a href="extra/logout.php" >Logga ut</a>';
 						}						
 					} else{
